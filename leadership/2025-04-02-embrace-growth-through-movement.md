@@ -1,9 +1,9 @@
 ---
 title: "Embrace Growth Through Movement"
-description: "Discover why stepping outside your comfort zone is the secret to personal and professional growth."
-slug: "embrace-growth-through-movement"
-author: "Gustavo Ocanto"
-category: leadership
+excerpt: "Discover why stepping outside your comfort zone is the secret to personal and professional growth."
+slug: "2025-04-02-embrace-growth-through-movement"
+author: "gocanto"
+category: "leadership"
 tags: ["growth", "mindset", "experience", "self-discovery", "learning", "curiosity", "discovery"]
 ---
 It's essential to keep pushing forward and trying new things. Think of it like this: if you stay in one spot, you're not seeing all the fantastic stuff life offers. Growth isn't just about getting better at your work; it's about becoming a fuller, more vibrant person. It stems from moving forward, actively seeking new skills, and immersing yourself in diverse situations and perspectives. These new experiences aren't just things that happen to you – they actively shape you.
