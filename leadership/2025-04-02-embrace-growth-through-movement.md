@@ -2,6 +2,7 @@
 title: "Embrace Growth Through Movement"
 excerpt: "Discover why stepping outside your comfort zone is the secret to personal and professional growth."
 slug: "2025-04-02-embrace-growth-through-movement"
+published_at: 2025-04-02
 author: "gocanto"
 category: "leadership"
 tags: ["growth", "mindset", "experience", "self-discovery", "learning", "curiosity", "discovery"]
