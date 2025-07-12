@@ -4,7 +4,7 @@ excerpt: "Discover why stepping outside your comfort zone is the secret to perso
 slug: "2025-04-02-embrace-growth-through-movement"
 published_at: 2025-04-02
 author: "gocanto"
-category: "leadership"
+categories: "leadership"
 tags: ["growth", "mindset", "experience", "self-discovery", "learning", "curiosity", "discovery"]
 ---
 ![growth-through-movement](https://github.com/user-attachments/assets/b5d3ac73-967b-450c-8e08-950b7e78aaff)
