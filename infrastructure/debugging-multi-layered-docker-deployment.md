@@ -110,3 +110,199 @@ The final config delivers 200s end-to-end with mTLS, and we added guards (**405*
 -   **Client auth config names**  
 
     On the **upstream TLS** hop (web → API :8443), we used `tls_client_auth <cert> <key>` and `tls_server_name`. On the **server-side** TLS (API `:8443` site), we used `client_auth { mode require_and_verify; trust_pool file /etc/caddy/mtls/ca.pem }`. (`trust_pool` is the current CA trust mechanism for client auth.) [Caddy Docs](https://caddyserver.com/docs/modules/http.reverse_proxy.transport.http)
+
+## The Step-by-Step Debugging & Hotfixes
+
+### A) Prove basic network & container naming
+
+-   Confirm both stacks share `caddy_net` and can resolve each other:
+```docker
+docker network inspect caddy_net | jq '.[]?.Containers | to_entries[] | {name: .value.Name, ipv4: .value.IPv4Address}'
+```
+-   Result showed `oullin_proxy_prod`, `web_caddy_prod`, `oullin_api` on `172.19.0.0/16`.
+
+
+### B) Fix the mTLS trust chain (web → API)
+
+-   Rotate/regenerate CA and client leaf on the API side.
+-   **Sync** `ca.pem`, `client.pem`, `client.key` into `web_caddy_prod` (mounted `caddy/mtls:ro`).
+-   Test from a web container:
+
+### B) Fix the mTLS trust chain (web → API)
+
+-   Rotate/regenerate CA and client leaf on the API side.
+-   **Sync** `ca.pem`, `client.pem`, `client.key` into `web_caddy_prod` (mounted `caddy/mtls:ro`).
+-   Test from a web container:
+```shell
+curl -vk \
+  --cert /etc/caddy/mtls/client.pem \
+  --key  /etc/caddy/mtls/client.key \
+  --cacert /etc/caddy/mtls/ca.pem \
+  https://oullin_proxy_prod:8443/api/generate-signature
+```
+
+-   (Client cert flags are standard `curl` TLS client-auth options.)
+
+### C) Eliminate `421` (SNI/Host consistency)
+
+-   In **web** Caddy’s relay `reverse_proxy`, set:
+
+```json
+reverse_proxy https://oullin_proxy_prod:8443 {
+  header_up Host oullin_proxy_prod
+  transport http {
+    tls
+    tls_server_name oullin_proxy_prod
+    tls_client_auth /etc/caddy/mtls/client.pem /etc/caddy/mtls/client.key
+    tls_trust_pool file /etc/caddy/mtls/ca.pem
+  }
+}
+```
+
+-   (Client cert flags are standard `curl` TLS client-auth options.)
+
+
+### C) Eliminate `421` (SNI/Host consistency)
+
+-   In **web** Caddy’s relay `reverse_proxy`, set:
+
+```json
+reverse_proxy https://oullin_proxy_prod:8443 {
+  header_up Host oullin_proxy_prod
+  transport http {
+    tls
+    tls_server_name oullin_proxy_prod
+    tls_client_auth /etc/caddy/mtls/client.pem /etc/caddy/mtls/client.key
+    tls_trust_pool file /etc/caddy/mtls/ca.pem
+  }
+}
+```
+-   This ensures the TLS SNI and HTTP Host seen by API Caddy match its site. `421` disappeared. (Strict SNI behaviour with client auth is documented.) [Caddy Docs](https://caddyserver.com/docs/caddyfile/options?utm_source=chatgpt.com)
+
+
+### D) Fix the path to rewrite chain and method guards
+
+**Web Caddy (`:80`)** — strip `/relay`, rewrite to `/api{path}` and **deny GET**:
+
+```json
+{
+  debug
+}
+
+:80 {
+  @relay_get {
+    path /relay/*
+    method GET
+  }
+
+  handle_path /relay/* {
+    handle @relay_get {
+      respond 405
+    }
+
+    rewrite * /api{path}
+
+    reverse_proxy https://oullin_proxy_prod:8443 {
+      header_up Host oullin_proxy_prod
+      transport http {
+        tls
+        tls_server_name oullin_proxy_prod
+        tls_client_auth /etc/caddy/mtls/client.pem /etc/caddy/mtls/client.key
+        tls_trust_pool file /etc/caddy/mtls/ca.pem
+      }
+    }
+  }
+
+  # Static SPA
+  handle {
+    root * /usr/share/caddy
+    try_files {path} /index.html
+    file_server
+  }
+
+  log {
+    output stdout
+    format json
+  }
+}
+```
+Why `handle_path`? Because it **strips** `/relay` before sub-handlers run. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle_path?utm_source=chatgpt.com)
+
+**API Caddy (`:8443`)** — require client certs, **strip `/api`** then proxy:
+```json
+:8443 {
+  tls /etc/caddy/mtls/server.pem /etc/caddy/mtls/server.key {
+    client_auth {
+      mode require_and_verify
+      trust_pool file /etc/caddy/mtls/ca.pem
+    }
+  }
+
+  encode gzip zstd
+
+  @sig path /api/generate-signature*
+  handle @sig {
+    uri strip_prefix /api
+    reverse_proxy api:8080
+  }
+
+  # deny anything else on the mTLS port
+  handle {
+    respond 403
+  }
+}
+```
+
+-   `uri strip_prefix /api` is the fix for the earlier `404` (backend expects `/generate-signature*`).
+-   `trust_pool` is the modern way to point Caddy at your client-CA trust source. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/tls?utm_source=chatgpt.com)
+
+
+### E) CI & validation
+
+-   **Pin Caddy 2.10.0** everywhere (web image, API build arg, CI Docker image).
+-   Add **format + validate** steps in CI for both Caddy files:
+
+```docker
+caddy fmt --overwrite /etc/caddy/Caddyfile
+caddy validate --config /etc/caddy/Caddyfile
+```
+
+-   Add an integration test that POSTS to `/relay/generate-signature` in a compose-up ephemeral environment to catch regressions.
+
+
+### F) Final guards & hygiene
+
+-   Keep `caddy/mtls` mounts `:ro` on both stacks.
+-   Remove redundant `header_up` for `X-Forwarded-*` (Caddy forwards by default). [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy?utm_source=chatgpt.com)
+-   Optionally short-circuit **CORS preflight** on `/relay/*` with a `204` response if you want to reduce hops.
+
+
+## The Win: Verified 200s
+
+After SNI/Host alignment + path fixes + CA sync, the browser showed:
+
+```yaml
+Status Code: 200 OK
+content-type: application/json
+etag: W/"0.0.1"
+via: 1.1 Caddy  →  2.0 Caddy  →  1.1 Caddy
+```
+
+That means: Cloudflare → API Caddy (public) → web Caddy (relay) → API Caddy (:8443 mTLS) → Go API is working exactly as designed.
+
+
+## Practical Lessons
+
+-   **When you enable client auth, expect strict SNI behavior.** Always set `tls_server_name` (SNI) and make sure the upstream sees a matching `Host`. Otherwise you’ll chase `421`s. [Caddy Docs](https://caddyserver.com/docs/caddyfile/options?utm_source=chatgpt.com)
+-   **Use `handle_path` whenever you intend to strip path prefixes.** It avoids double-rewrites and confusing `404`s. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle_path?utm_source=chatgpt.com)
+-   **Scope named matchers outside `handle_path`.** Use nested `handle` blocks to apply them (e.g., 405 on GET). [Caddy Docs+1](https://caddyserver.com/docs/caddyfile/directives/handle_path?utm_source=chatgpt.com)
+-   **Pin Caddy versions across CI/Dev/Prod.** The parser gets stricter over time; pinning avoids surprise breakages.
+
+## References & Further Reading
+
+-   **Caddy file `handle_path`** — strips the matched prefix; cannot use named matchers directly in the header. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle_path?utm_source=chatgpt.com)
+-   **Caddy file `handle` (ordering, nesting)** — how handlers sort and interact. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle?utm_source=chatgpt.com)
+-   **`reverse_proxy` and HTTP transport TLS options** (SNI, client cert to upstream). [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy?utm_source=chatgpt.com)
+-   **Client-auth & `trust_pool` in `tls`** (modern CA trust configuration). [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/tls?utm_source=chatgpt.com)
+-   **Why you saw `421`** — definition and strict SNI behaviour when client auth is enabled. [developer.mozilla.org+1](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/421?utm_source=chatgpt.com)
+-   **When to prefer `handle_path` for path stripping** — community guidance/examples. [Caddy Community](https://caddy.community/t/how-to-get-the-reverse-proxy-directive-to-strip-the-path-of-the-request-before-forwarding-the-request-upstream/16525?utm_source=chatgpt.com)
