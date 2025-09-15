@@ -28,11 +28,11 @@ The final config delivers 200s end-to-end with mTLS, and we added guards (**405*
 |--------------------------------------------|----------------------------------------------------------------------------------------------------------|
 | **Makefile**                               | A file used by `make` to define automation rules for building and deployment.                            |
 | **Docker Compose**                         | A tool for defining and running multi-container Docker applications.                                     |
-| **SNI (Server name indication)**           | It is an addition to the TLS encryption protocol that enables a client device to specify the domain name |
+| **SNI (Server Name Indication)**           | An extension to the TLS protocol that allows a client to specify the hostname it's connecting to         |
 | **Security Profile**                       | A set of rules in AppArmor that defines what actions a process can perform.                              |
 | **TLS (Transport Layer Security)**         | Protocol for encrypting data between servers and clients.                                                |
 | **mTLS** (Mutual Transport Layer Security) | mTLS is a security protocol that provides two-way authentication and encryption for network connections. |
-| **CA** (A Certificate Authority)           | It a trusted entity that issues digital certificates to verify the identity of websites.                 |
+| **CA** (A Certificate Authority)           | A trusted entity that issues digital certificates to verify the identity of websites.                    |
 | **Docker Secret**                          | A secure way to store sensitive data (like usernames or passwords) in Docker.                            |
 | **Entrypoint Script**                      | The startup script that runs when a container is launched.                                               |
 | **`security_opt`**                         | A Docker Compose option that modifies container security settings.                                       |
