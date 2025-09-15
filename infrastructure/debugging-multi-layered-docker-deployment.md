@@ -48,6 +48,34 @@ The final config delivers 200s end-to-end with mTLS, and we added guards (**405*
   - Both stacks join the external `caddy_net` network and can reach each other by container name (confirmed with `docker network inspect`).
 - **Why mTLS for a single path?** — We wanted a hardened back-channel for signing operations. The public listener explicitly blocks `/api/generate-signature*`; only the internal `:8443` mTLS listener will serve it.
 
+## What We Saw in Development vs Production
+
+-   **Development**
+    -   Web Caddy is listening on `:80` only (no auto-HTTPS).
+    -   The relay used `handle_path` to strip `/relay` and forward to the API mTLS endpoint.
+    -   Local tests from containers worked once certs were aligned and the path rewrite was correct.
+-   **Production**
+    -   Cloudflare → API Caddy (`oullin_proxy_prod`) for `oullin.io`. The default site in API Caddy reverse-proxies SPA traffic to `web:80`.
+    -   The **relay** path still originates at the **web** layer (because SPA code calls `/relay/...`), which means:  
+        Cloudflare → API Caddy → **web Caddy** `/relay/*` → **API Caddy :8443 (mTLS)** → `api:8080`.
 
 
+## Initial Symptoms
 
+-   **Container-side curl to mTLS failed with client-auth errors**
+
+    ```shell
+      TLS alert unknown ca
+    ```
+
+    > The API side required a client cert signed by its CA; the web side was using an outdated CA bundle (or wrong CA). We synced a fresh `ca.pem`/client pair into `web_caddy_prod` and errors moved on.
+
+-   **End-to-end calls returned `421 Misdirected Request`**  
+    Reproducible via both the browser and `curl -H 'Host: oullin.io' ... /relay/generate-signature`.  
+    The debug logs showed the upstream (API’s `:8443`) returning `421`, not web Caddy itself.
+
+    Why? On Caddy, enabling TLS client authentication implies `strict_sni_host`. The server expects the **SNI** (TLS `ServerName`) to match the **Host** it sees for that site; if they don’t match, the request is rejected with `421`. [Caddy Web Server](https://caddyserver.com/docs/caddyfile/options?utm_source=chatgpt.com)  
+    Also, `421` broadly means “this server isn’t configured to answer for that scheme/authority”—consistent with an SNI/Host mismatch. [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/421?utm_source=chatgpt.com)
+
+-   **A stray `404` after we “fixed” 421**  
+    We were rewriting `/relay/*` to `/api{path}` but the API’s `:8443` site needed to **strip** `/api` before proxying to `api:8080`. Missing that produced 404s at the backend route.
