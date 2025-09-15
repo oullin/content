@@ -127,12 +127,6 @@ docker network inspect caddy_net | jq '.[]?.Containers | to_entries[] | {name: .
 -   Rotate/regenerate CA and client leaf on the API side.
 -   **Sync** `ca.pem`, `client.pem`, `client.key` into `web_caddy_prod` (mounted `caddy/mtls:ro`).
 -   Test from a web container:
-
-### B) Fix the mTLS trust chain (web → API)
-
--   Rotate/regenerate CA and client leaf on the API side.
--   **Sync** `ca.pem`, `client.pem`, `client.key` into `web_caddy_prod` (mounted `caddy/mtls:ro`).
--   Test from a web container:
 ```shell
 curl -vk \
   --cert /etc/caddy/mtls/client.pem \
