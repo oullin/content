@@ -20,7 +20,7 @@ Along the way we hit:
 - a **CA** sync issue between web and **API** containers (client cert rejected),
 - and a stray **404** from path rewriting.
 
-The final config delivers 200s end-to-end with mTLS, and we added guards (**405** on GET) and **CI** validation.
+The final config delivers 200s end-to-end with mTLS, and we added guards (**405** on GET) and **CI/Makefile** validation.
 
 ## Glossary of Terms
 
@@ -113,7 +113,7 @@ The final config delivers 200s end-to-end with mTLS, and we added guards (**405*
 
 ## The Step-by-Step Debugging & Hotfixes
 
-### A) Prove basic network & container naming
+### A) Prove basic network and container naming
 
 -   Confirm both stacks share `caddy_net` and can resolve each other:
 ```docker
@@ -185,10 +185,6 @@ reverse_proxy https://oullin_proxy_prod:8443 {
 **Web Caddy (`:80`)** — strip `/relay`, rewrite to `/api{path}` and **deny GET**:
 
 ```json
-{
-  debug
-}
-
 :80 {
   @relay_get {
     path /relay/*
