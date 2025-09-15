@@ -141,7 +141,7 @@ curl -vk \
 
 -   In **web** Caddy’s relay `reverse_proxy`, set:
 
-```json
+```shell
 reverse_proxy https://oullin_proxy_prod:8443 {
   header_up Host oullin_proxy_prod
   transport http {
@@ -160,7 +160,7 @@ reverse_proxy https://oullin_proxy_prod:8443 {
 
 -   In **web** Caddy’s relay `reverse_proxy`, set:
 
-```json
+```shell
 reverse_proxy https://oullin_proxy_prod:8443 {
   header_up Host oullin_proxy_prod
   transport http {
@@ -178,7 +178,7 @@ reverse_proxy https://oullin_proxy_prod:8443 {
 
 **Web Caddy (`:80`)** — strip `/relay`, rewrite to `/api{path}` and **deny GET**:
 
-```json
+```shell
 :80 {
   @relay_get {
     path /relay/*
@@ -219,7 +219,7 @@ reverse_proxy https://oullin_proxy_prod:8443 {
 Why `handle_path`? Because it **strips** `/relay` before sub-handlers run. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle_path?utm_source=chatgpt.com)
 
 **API Caddy (`:8443`)** — require client certs, **strip `/api`** then proxy:
-```json
+```shell
 :8443 {
   tls /etc/caddy/mtls/server.pem /etc/caddy/mtls/server.key {
     client_auth {
