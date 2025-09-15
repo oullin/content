@@ -142,7 +142,7 @@ curl -vk \
 -   In **web** Caddy’s relay `reverse_proxy`, set:
 
 ```shell
-reverse_proxy https://oullin_proxy_prod:8443 {
+"reverse_proxy https://oullin_proxy_prod:8443 {
   header_up Host oullin_proxy_prod
   transport http {
     tls
@@ -150,7 +150,7 @@ reverse_proxy https://oullin_proxy_prod:8443 {
     tls_client_auth /etc/caddy/mtls/client.pem /etc/caddy/mtls/client.key
     tls_trust_pool file /etc/caddy/mtls/ca.pem
   }
-}
+}"
 ```
 
 -   (Client cert flags are standard `curl` TLS client-auth options.)
@@ -179,7 +179,7 @@ reverse_proxy https://oullin_proxy_prod:8443 {
 **Web Caddy (`:80`)** — strip `/relay`, rewrite to `/api{path}` and **deny GET**:
 
 ```shell
-:80 {
+":80 {
   @relay_get {
     path /relay/*
     method GET
@@ -214,13 +214,13 @@ reverse_proxy https://oullin_proxy_prod:8443 {
     output stdout
     format json
   }
-}
+}"
 ```
 Why `handle_path`? Because it **strips** `/relay` before sub-handlers run. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle_path?utm_source=chatgpt.com)
 
 **API Caddy (`:8443`)** — require client certs, **strip `/api`** then proxy:
 ```shell
-:8443 {
+":8443 {
   tls /etc/caddy/mtls/server.pem /etc/caddy/mtls/server.key {
     client_auth {
       mode require_and_verify
@@ -240,7 +240,7 @@ Why `handle_path`? Because it **strips** `/relay` before sub-handlers run. [Cadd
   handle {
     respond 403
   }
-}
+}"
 ```
 
 -   `uri strip_prefix /api` is the fix for the earlier `404` (backend expects `/generate-signature*`).
