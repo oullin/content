@@ -43,18 +43,23 @@ The final config delivers 200s end-to-end with mTLS, and we added guards (**405*
 ## Background & Architecture
 
 - **Two Caddy layers, two Compose projects, one shared network.**
+
   - **API stack** (`oullin_proxy_prod`) terminates public TLS for `oullin.io` and also exposes a **private** mTLS listener on `:8443` for exactly one path: `/api/generate-signature`. Downstream is the Go API at `api:8080`.
   - Web stack (`web_caddy_prod`) serves the SPA on HTTP `:80` and implements a relay entrypoint `/relay/*` that internally calls the API’s mTLS gateway on `oullin_proxy_prod:8443`.
   - Both stacks join the external `caddy_net` network and can reach each other by container name (confirmed with `docker network inspect`).
+
 - **Why mTLS for a single path?** — We wanted a hardened back-channel for signing operations. The public listener explicitly blocks `/api/generate-signature*`; only the internal `:8443` mTLS listener will serve it.
 
 ## What We Saw in Development vs Production
 
 -   **Development**
+
     -   Web Caddy is listening on `:80` only (no auto-HTTPS).
     -   The relay used `handle_path` to strip `/relay` and forward to the API mTLS endpoint.
     -   Local tests from containers worked once certs were aligned and the path rewrite was correct.
+
 -   **Production**
+
     -   Cloudflare → API Caddy (`oullin_proxy_prod`) for `oullin.io`. The default site in API Caddy reverse-proxies SPA traffic to `web:80`.
     -   The **relay** path still originates at the **web** layer (because SPA code calls `/relay/...`), which means:  
         Cloudflare → API Caddy → **web Caddy** `/relay/*` → **API Caddy :8443 (mTLS)** → `api:8080`.
@@ -71,11 +76,37 @@ The final config delivers 200s end-to-end with mTLS, and we added guards (**405*
     > The API side required a client cert signed by its CA; the web side was using an outdated CA bundle (or wrong CA). We synced a fresh `ca.pem`/client pair into `web_caddy_prod` and errors moved on.
 
 -   **End-to-end calls returned `421 Misdirected Request`**  
+
     Reproducible via both the browser and `curl -H 'Host: oullin.io' ... /relay/generate-signature`.  
     The debug logs showed the upstream (API’s `:8443`) returning `421`, not web Caddy itself.
 
-    Why? On Caddy, enabling TLS client authentication implies `strict_sni_host`. The server expects the **SNI** (TLS `ServerName`) to match the **Host** it sees for that site; if they don’t match, the request is rejected with `421`. [Caddy Web Server](https://caddyserver.com/docs/caddyfile/options?utm_source=chatgpt.com)  
-    Also, `421` broadly means “this server isn’t configured to answer for that scheme/authority”—consistent with an SNI/Host mismatch. [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/421?utm_source=chatgpt.com)
+    Why? On Caddy, enabling TLS client authentication implies `strict_sni_host`. The server expects the **SNI** (TLS `ServerName`) to match the **Host** it sees for that site; if they don’t match, the request is rejected with `421`. [Caddy Docs](https://caddyserver.com/docs/caddyfile/options)  
+    Also, `421` broadly means “this server isn’t configured to answer for that scheme/authority”—consistent with an SNI/Host mismatch. [Mozilla Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/421)
 
 -   **A stray `404` after we “fixed” 421**  
+
     We were rewriting `/relay/*` to `/api{path}` but the API’s `:8443` site needed to **strip** `/api` before proxying to `api:8080`. Missing that produced 404s at the backend route.
+
+## Root Causes (with Caddy file gotchas)
+
+-   **SNI/Host mismatch on the mTLS hop**  
+
+    API Caddy’s `:8443` listener had client auth enabled. That turns on strict SNI checks; if the web relay connects with SNI 
+    different from the Host the upstream Caddy expects, it emits `421`. Fix: on the _web_ side of the relay, set both the **TLS SNI** 
+    and the **forwarded Host** to the upstream service name exposed by Caddy (`oullin_proxy_prod`).
+
+    -   `tls_server_name oullin_proxy_prod` (SNI) in the transport
+    -   `header_up Host oullin_proxy_prod` to make the HTTP Host consistent  
+        (The reverse proxy module uses TLS to the upstream; SNI and client cert options live under `transport http { tls ... }`.) [Caddy Docs](https://caddyserver.com/docs/modules/http.reverse_proxy.transport.http)
+
+-   **Using `handle_path` correctly**  
+
+    `handle_path` is the right tool to **strip** the matched prefix before routing to sub-handlers (as opposed to `handle`, which preserves the path). That’s how we remove `/relay` on the web tier, and `/api` on the API mTLS tier. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle_path)
+
+-   **Named matchers + `handle_path` scope**  
+
+    `handle_path` accepts a _path matcher_ right in its header and cannot be combined with named matchers there; named matchers must be defined at site scope and used in nested `handle` blocks. We used that to return `405` on accidental GETs to `/relay/*`. [Caddy Docs](https://caddyserver.com/docs/caddyfile/directives/handle_path)
+
+-   **Client auth config names**  
+
+    On the **upstream TLS** hop (web → API :8443), we used `tls_client_auth <cert> <key>` and `tls_server_name`. On the **server-side** TLS (API `:8443` site), we used `client_auth { mode require_and_verify; trust_pool file /etc/caddy/mtls/ca.pem }`. (`trust_pool` is the current CA trust mechanism for client auth.) [Caddy Docs](https://caddyserver.com/docs/modules/http.reverse_proxy.transport.http)
