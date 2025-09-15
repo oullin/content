@@ -23,6 +23,7 @@ Along the way we hit:
 The final config delivers 200s end-to-end with mTLS, and we added guards (**405** on GET) and **CI** validation.
 
 ## Glossary of Terms
+
 | Term                                       | Definition                                                                                               |
 |--------------------------------------------|----------------------------------------------------------------------------------------------------------|
 | **Makefile**                               | A file used by `make` to define automation rules for building and deployment.                            |
@@ -37,3 +38,16 @@ The final config delivers 200s end-to-end with mTLS, and we added guards (**405*
 | **`security_opt`**                         | A Docker Compose option that modifies container security settings.                                       |
 | **VPS (Virtual Private Server)**           | A virtualised server instance hosted by a provider.                                                      |
 | **`docker exec`**                          | A Docker command used to run a command inside a running container.                                       |
+
+
+## Background & Architecture
+
+- **Two Caddy layers, two Compose projects, one shared network.**
+  - **API stack** (`oullin_proxy_prod`) terminates public TLS for `oullin.io` and also exposes a **private** mTLS listener on `:8443` for exactly one path: `/api/generate-signature`. Downstream is the Go API at `api:8080`.
+  - Web stack (`web_caddy_prod`) serves the SPA on HTTP `:80` and implements a relay entrypoint `/relay/*` that internally calls the API’s mTLS gateway on `oullin_proxy_prod:8443`.
+  - Both stacks join the external `caddy_net` network and can reach each other by container name (confirmed with `docker network inspect`).
+- **Why mTLS for a single path?** — We wanted a hardened back-channel for signing operations. The public listener explicitly blocks `/api/generate-signature*`; only the internal `:8443` mTLS listener will serve it.
+
+
+
+
