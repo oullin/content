@@ -7,6 +7,7 @@ author: "gocanto"
 categories: "devops"
 tags: ["devops", "seo", "web", "JSON-LD", "Open Graph", "cli", "crawlers"]
 ---
-![reverse-proxy](https://github.com/user-attachments/assets/da7d8035-c151-42c3-9db8-1495e14a95d5)
+
+<img width="1536" height="1024" alt="ChatGPT Image Sep 25, 2025, 03_41_59 PM" src="https://github.com/user-attachments/assets/bfa4bd21-6a31-45f1-9882-b726e8e0760d" />
 
 ## Debugging a Multi-Layered Docker + Caddy + mTLS Deployment
