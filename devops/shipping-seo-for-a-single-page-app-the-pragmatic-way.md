@@ -17,6 +17,17 @@ tags: ["devops", "seo", "web", "JSON-LD", "Open Graph", "cli", "crawlers"]
 > I added an **SEO generation engine** to our Go API. It renders crawler-friendly static pages using an embedded HTML template, JSON-LD, Open Graph, Twitter meta-tags, and a web manifest. 
 > It’s driven from the API's CLI interface, with fresh env vars and a small router refactor to reuse fixtures for content.
 
+If you have ever shared a link to a single page app and seen a blank or generic preview, you have met the gap between great user experience and what crawlers can actually read. 
+SPAs render content in the browser. Search engines and social platforms often do not. That mismatch hurts discoverability and the way our links look when people share them.
+
+PR [#110](https://github.com/oullin/api/pull/110) closes that gap pragmatically. I did not add server side rendering or change how the app runs in production. 
+I built a small SEO generator that runs from the CLI, pulls the same content our API serves, and produces clean, static HTML with proper meta-tags, JSON-LD, and a web manifest. 
+Humans still get the fast SPA they know. Crawlers get a lightweight page they can understand at a glance.
+
+This post explains the problem, the design choices, and what shipped. I keep the language plain and define terms as I go, so non-technical readers can follow along. 
+Engineers will find exact entry points, data flows, and trade-offs. By the end, you will see how to generate the pages locally, what to expect in the output, and why 
+this approach keeps operations simple while improving search and sharing.
+
 
 ## What's the problem solved
 
@@ -95,7 +106,7 @@ Engineers get a predictable, testable rendering flow; non-technical folks get **
 Shipping great previews and search results shouldn’t require a new runtime. With PR #110 I kept the SPA exactly as users 
 know it and gave crawlers clean, fast HTML that tells the right story. If you are technical, the entry points live in 
 `metal/cli/seo` and you can run the generator from the CLI to see the output under `storage/seo/pages`. If you are not, 
-the headline is simple: our links now look better, read better and travel further.
+the headline is simple: our links now look better, read better, and travel further.
 
 I plan to extend coverage beyond the homepage and wire regeneration into CI so pages stay fresh as content evolves. 
 If you spot an edge case or have an idea that would clarify the output, open an issue or drop me a note.
