@@ -10,6 +10,10 @@ tags: ["engineering", "seo", "web", "JSON-LD", "Open Graph", "cli", "crawlers"]
 
 <img width="1536" height="1024" alt="new-seo" src="https://github.com/user-attachments/assets/12848e3f-baef-4c93-a050-61574a756f13" />
 
+===
+
+![reverse-proxy](https://github.com/user-attachments/assets/12848e3f-baef-4c93-a050-61574a756f13)
+
 
 ## Shipping SEO for a single-page app, the pragmatic way
 
