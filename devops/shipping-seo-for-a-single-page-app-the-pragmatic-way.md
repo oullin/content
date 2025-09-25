@@ -43,7 +43,7 @@ SEO pages offline** and serve those to crawlers, while keeping our SPA unchanged
 
 -   Router gained **fixture-driven** static wiring so the generator can reuse the same handlers without booting the whole server. Tests were updated accordingly.
 -   **Categories** repository was introduced to support SEO sections.
--   Generated artefacts are **ignored**: `ENV_SPA_DIR` (with `.gitkeep` kept). [GitHub](https://github.com/oullin/web/pull/64/files)
+-   Generated artefacts are **ignored**: `ENV_SPA_DIR` (with `.gitkeep` kept).
 
 ## How it works (plain English)
 
@@ -88,7 +88,7 @@ Engineers get a predictable, testable rendering flow; non-technical folks get **
 
 ## PR facts at a glance
 
--   **Merged:** 25 Sep 2025. **Commits:** 27. **Files changed:** 45. **Net lines:** +1,318 −221.
+-   **Merged:** 25 Sep 2025. **Commits:** 27. **Files changed:** 45. **Net lines:** `+1,318 −221`.
 -   **New envs:** `ENV_APP_URL`, `ENV_SPA_DIR`.
 -   **Ignored outputs:** `storage/seo/*.*` with `.gitkeep`.
 
