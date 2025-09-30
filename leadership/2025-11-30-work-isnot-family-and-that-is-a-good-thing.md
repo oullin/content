@@ -1,3 +1,13 @@
+---
+title: "Work Isn't a Family—and That's a Good Thing"
+excerpt: "The problem with calling work a “family” is that it requires a deep personal commitment, yet offers no emotional safety that real families provide. In a true family, love and support are unconditional."
+slug: "2025-11-30-work-isnot-family-and-that-is-a-good-thing"
+published_at: 2025-11-30
+author: "gocanto"
+categories: "leadership"
+tags: ["growth", "mindset", "experience", "self-discovery", "learning", "curiosity", "discovery"]
+---
+
 # Work Isn't a Family—and That's a Good Thing
 
 The phrase “we’re like family here” gets thrown around in workplaces, but I’ve never liked it. It’s rarely true. Often, it’s used to encourage employees to sacrifice their boundaries. The message is subtle but clear: prioritise the company, even on weekends or during your time off. However, when the company needs to downsize or shift priorities, those same employees realise that the loyalty they gave isn’t returned.
