@@ -1,12 +1,14 @@
 ---
 title: "Work Isn't a Family—and That's a Good Thing"
-excerpt: "The problem with calling work a “family” is that it requires a deep personal commitment, yet offers no emotional safety that real families provide. In a true family, love and support are unconditional."
-slug: "2025-11-30-work-isnot-family-and-that-is-a-good-thing"
+excerpt: "The problem with calling work a 'family' is that it requires a deep personal commitment, yet offers no emotional safety that real families provide. In a true family, love and support are unconditional."
+slug: "2025-11-30-work-is-not-family-and-that-is-a-good-thing"
 published_at: 2025-11-30
 author: "gocanto"
 categories: "leadership"
 tags: ["growth", "mindset", "experience", "self-discovery", "learning", "curiosity", "discovery"]
 ---
+
+![1742523900474](https://github.com/user-attachments/assets/1520a31d-fd3a-4a42-9c9c-a12a6d0230a2)
 
 # Work Isn't a Family—and That's a Good Thing
 
