@@ -1,8 +1,8 @@
 # Work Isn't a Family—and That's a Good Thing
 
-The phrase “we’re like family here” gets thrown around in workplaces, but I’ve never liked it. It’s rarely true. Often, it’s used to encourage employees to sacrifice their boundaries. The message is subtle but clear: put the company first, even on weekends or during your time off. However, when the company needs to downsize or shift priorities, those same employees realise that the loyalty they gave isn’t returned.
+The phrase “we’re like family here” gets thrown around in workplaces, but I’ve never liked it. It’s rarely true. Often, it’s used to encourage employees to sacrifice their boundaries. The message is subtle but clear: prioritise the company, even on weekends or during your time off. However, when the company needs to downsize or shift priorities, those same employees realise that the loyalty they gave isn’t returned.
 
-The problem with calling work a “family” is that it requires a deep personal commitment while offering no emotional safety that real families provide. In a true family, love and support are unconditional. That’s never the case at work. And that’s fine—because work shouldn’t be a family. Most people don’t want that anyway. They already have families. They want trust, collaboration, fairness, and the opportunity to do meaningful work.
+The problem with calling work a “family” is that it requires a deep personal commitment, yet offers no emotional safety that real families provide. In a true family, love and support are unconditional. That’s never the case at work. And that’s fine—because work shouldn’t be a family. Most people don’t want that anyway. They already have families. They seek trust, collaboration, fairness, and the opportunity to engage in meaningful work.
 
 ## So, what’s a better metaphor?
 
