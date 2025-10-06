@@ -1,7 +1,7 @@
 ---
 title: "Bugs are inevitable in software development"
 excerpt: "Bugs are an inevitable byproduct of software development. Fixing every bug isn’t always the top priority because bug-free software doesn’t guarantee usefulness, and software with bugs can still deliver value."
-slug: "2025-09-25-shipping-seo-for-a-single-page-app-the-pragmatic-way"
+slug: "2023-06-21-bugs-are-inevitable-in-software-development"
 published_at: 2025-09-25
 author: "gocanto"
 categories: "engineering"
