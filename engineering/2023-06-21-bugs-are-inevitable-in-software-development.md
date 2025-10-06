@@ -8,7 +8,7 @@ categories: "engineering"
 tags: ["engineering", "leadership", "integrations", "development", "software"]
 ---
 
-
+![1111111](https://github.com/user-attachments/assets/1158b596-1651-4b73-99a2-7d06feae9402)
 
 Disappointment arises when expectations don't align with reality, especially in the realm of. The prevalence of bugs in software often leads to continuous frustration and even anger among users. 
 However, it's essential to have a more formal and concise perspective on this matter.
