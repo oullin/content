@@ -2,7 +2,7 @@
 title: "Bugs are inevitable in software development"
 excerpt: "Bugs are an inevitable byproduct of software development. Fixing every bug isn’t always the top priority because bug-free software doesn’t guarantee usefulness, and software with bugs can still deliver value."
 slug: "2023-06-21-bugs-are-inevitable-in-software-development"
-published_at: 2025-09-25
+published_at: 2023-06-21
 author: "gocanto"
 categories: "engineering"
 tags: ["engineering", "leadership", "integrations", "development", "software"]
@@ -88,3 +88,7 @@ A pragmatic approach to quality acknowledges that bugs will exist and that their
 ### Key takeaway
 
 **Quality is multi-dimensional.** Strive for fewer bugs, but optimise for **usefulness, adoption, and user experience**.
+
+
+Source: [Gustavo Ocanto](https://www.linkedin.com/pulse/bugs-inevitable-software-development-gustavo-ocanto)
+
