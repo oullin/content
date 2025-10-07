@@ -7,7 +7,8 @@ author: "gocanto"
 categories: "infrastructure"
 tags: ["infrastructure", "Docker", "Caddy", "PostgreSQL", "Go", "tls", "proxy"]
 ---
-<img width="1280" height="720" alt="docker" src="https://github.com/user-attachments/assets/4ea98838-4467-454f-90f3-abf5db0f1c87" />
+
+<img width="1280" height="720" alt="docker" src="https://github.com/user-attachments/assets/cfda7c94-bf53-4849-8139-ab2684fbb699" />
 
 
 
