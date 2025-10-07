@@ -7,7 +7,9 @@ author: "gocanto"
 categories: "infrastructure"
 tags: ["infrastructure", "Docker", "Caddy", "PostgreSQL", "Go", "tls", "proxy"]
 ---
-![reverse-proxy](https://github.com/user-attachments/assets/da7d8035-c151-42c3-9db8-1495e14a95d5)
+<img width="1280" height="720" alt="docker" src="https://github.com/user-attachments/assets/4ea98838-4467-454f-90f3-abf5db0f1c87" />
+
+
 
 ## Debugging a Multi-Layered Docker + Caddy + mTLS Deployment
 > **TL;DR**
