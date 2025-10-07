@@ -8,7 +8,8 @@ categories: "engineering"
 tags: ["engineering", "seo", "web", "JSON-LD", "Open Graph", "cli", "crawlers"]
 ---
 
-![seo](https://github.com/user-attachments/assets/12848e3f-baef-4c93-a050-61574a756f13)
+![seo](https://github.com/user-attachments/assets/e5abb532-59bf-49bb-a9d2-0c31872718d7)
+
 
 
 ## Shipping SEO for a single-page app, the pragmatic way
