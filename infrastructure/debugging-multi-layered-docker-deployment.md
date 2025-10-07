@@ -8,7 +8,7 @@ categories: "infrastructure"
 tags: ["infrastructure", "Docker", "Caddy", "PostgreSQL", "Go", "tls", "proxy"]
 ---
 
-<img width="1280" height="720" alt="docker" src="https://github.com/user-attachments/assets/cfda7c94-bf53-4849-8139-ab2684fbb699" />
+![docker](https://github.com/user-attachments/assets/cfda7c94-bf53-4849-8139-ab2684fbb699)
 
 
 
