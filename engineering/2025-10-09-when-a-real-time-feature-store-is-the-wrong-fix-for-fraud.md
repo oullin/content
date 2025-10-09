@@ -1,6 +1,14 @@
+---
+title: "When a Real-Time Feature Store Is the Wrong Fix for Fraud: A Practical Guide"
+excerpt: "Real-time feature stores can help, but they are not a silver bullet. Fix training–serving skew with shared transforms, point-in-time data, and proof that freshness pays."
+slug: "2025-10-09-when-a-real-time-feature-store-is-the-wrong-fix-for-fraud"
+published_at: 2025-10-09
+author: "gocanto"
+categories: "engineering"
+tags: ["engineering", "ml", "jobs", "async", "ai"]
+---
 
-
-<img width="820" height="461" alt="1748287448109" src="https://github.com/user-attachments/assets/ae9d2c95-8dd7-4ceb-8c3c-83ea0b28f501" />
+![feature-store](https://github.com/user-attachments/assets/ae9d2c95-8dd7-4ceb-8c3c-83ea0b28f501)
 
 
 # When a Real-Time Feature Store Is the Wrong Fix for Fraud: A Practical Guide
@@ -125,7 +133,7 @@ Example: +1.5 pp precision at fixed recall, p99 under 20 ms, 99.99 availability.
 - **Ops:** p99 decision latency, feature cache hit rate, online feature availability, fallback usage.
 - **Governance:** lineage coverage, deletion time for PII, audit completeness.
 
-## Common anti-patterns to avoid
+## Common antipatterns to avoid
 
 - Training used signals not available at decision time.
 - Event-time windows offline, processing-time windows online.
