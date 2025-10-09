@@ -1,3 +1,7 @@
+
+![ML-Feature-Store-863x300-1](https://github.com/user-attachments/assets/b3676837-6399-4410-b23e-93c5c2c07481)
+
+
 # When a Real-Time Feature Store Is the Wrong Fix for Fraud: A Practical Guide
 
 **TL;DR:** Training–serving skew happens when the data or logic used to train a model does not match what is used in production. A real-time feature store can help with freshness and consistency, but it is not a cure-all. 
