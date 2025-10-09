@@ -1,5 +1,6 @@
 
-![ML-Feature-Store-863x300-1](https://github.com/user-attachments/assets/b3676837-6399-4410-b23e-93c5c2c07481)
+
+<img width="820" height="461" alt="1748287448109" src="https://github.com/user-attachments/assets/ae9d2c95-8dd7-4ceb-8c3c-83ea0b28f501" />
 
 
 # When a Real-Time Feature Store Is the Wrong Fix for Fraud: A Practical Guide
