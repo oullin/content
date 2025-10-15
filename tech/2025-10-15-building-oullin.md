@@ -342,5 +342,5 @@ If you’re considering doing the same: pick boring tools, write small services,
 **Open source repos:**  
 - API: [https://github.com/oullin/api](https://github.com/oullin/api)  
 - Web: [https://github.com/oullin/web](https://github.com/oullin/web)
-- Infra: [https://github.com/oullin/web](https://github.com/oullin/infra)
+- Infra: [https://github.com/oullin/infra](https://github.com/oullin/infra)
 - Articles: [https://github.com/oullin/content](https://github.com/oullin/content)
