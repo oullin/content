@@ -8,6 +8,9 @@ categories: "tech"
 tags: ["development", "software", "automation"]
 ---
 
+<img width="4032" height="2268" alt="IMG_6989" src="https://github.com/user-attachments/assets/0279eaf9-4a1b-4e6b-a66a-00458c953679" />
+
+
 # Building Oullin: How I Built My Personal Site and Blog Engine.
 
 > Today I’m launching my personal website and journal — [oullin.io](https://oullin.io). I built it from the ground up to be fast, simple, and entirely under my control. I also built it to scratch a deeper itch: I love programming, and I try to learn something new every day. Building this stack in public keeps me curious and keeps me honest about what works in the real world.
