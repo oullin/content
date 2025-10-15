@@ -1,12 +1,13 @@
 # Building Oullin: How I Built My Personal Site and Blog Engine with Go, Docker, Caddy, Vue, and a Modest VPS
 
-> Today I’m launching my personal website and blog — [oullin.io](https://oullin.io). I built it from the ground up to be fast, simple, and entirely under my control. In this post, I’m sharing the launch story and the build story in one: the choices I made, why I picked Go for the backend, Vue for the front end, Caddy at the edge, and Docker on a lean VPS, plus the trade-offs, pitfalls, and what I’d do differently next time.
+> Today I’m launching my personal website and blog — [oullin.io](https://oullin.io). I built it from the ground up to be fast, simple, and entirely under my control. I also built it to scratch a deeper itch: I love programming, and I try to learn something new every day. Building this stack in public keeps me curious and keeps me honest about what works in the real world.
 >
-> The entire codebase is public and open source. If you’re curious or want to reuse parts of it, explore the repos — the Go API at [github.com/oullin/api](https://github.com/oullin/api) and the Vue web app at [github.com/oullin/web](https://github.com/oullin/web). The READMEs cover local setup with Docker Compose and production notes with Caddy. Issues and pull requests are welcome if you spot bugs, have ideas, or want to contribute.
+> The entire codebase is public and open source. If you want to explore or reuse parts of it, please take a look at the link I've included to the [oullin organisation](https://github.com/oullin) in GitHub. The READMEs cover local setup with Docker Compose and production notes with Caddy. I want you to know that issues and pull requests are welcome if you spot bugs, have ideas, or want to contribute.
 
 I wanted a personal site that felt **fast**, **simple**, and **mine**. No heavy CMS. No mystery plugins. Just a small stack I could understand from start to finish and iterate on forever.
 
 This post is the story of how I built [oullin.io](https://oullin.io) from zero: the decisions, the trade-offs, the stack, and the scars. I’ll keep it technical without losing plain English, and share a few copy-paste snippets you can adapt.
+
 
 ## Why build from scratch?
 
@@ -14,14 +15,16 @@ This post is the story of how I built [oullin.io](https://oullin.io) from zero: 
 - **Learning.** Shipping a real thing forces decisions: how I structure Go packages, how I proxy with Caddy, how I containerise and deploy on a no-frills VPS.
 - **Longevity.** A simple codebase ages better than a pile of plugins.
 
+
 ## The stack at a glance
 
 - **Go (API + generators).** One binary for content APIs and a tiny admin; separate CLI tasks for SEO/meta generation.
-- **Vue 3 + Vite (web).** A lean SPA for the reader experience.
+- **Vue + Vite (web).** A lean SPA for the reader experience.
 - **Caddy (edge).** TLS, HTTP/2/3, caching hints, clean reverse proxy.
 - **PostgreSQL (persistence).** Boring, reliable, well-documented.
 - **Docker Compose (ops).** One file, multiple profiles (local vs prod).
 - **A modest VPS.** Enough CPU/RAM to be honest about performance.
+
 
 ## Architecture in 30 seconds
 
@@ -35,6 +38,7 @@ This post is the story of how I built [oullin.io](https://oullin.io) from zero: 
 - The **Go API** returns posts, pages, tags, and search; it also exposes a private admin endpoint.
 - **PostgreSQL** stores canonical content (markdown + metadata).
 - A **Go CLI** task pre-generates SEO pages and JSON-LD when I publish.
+
 
 ## Local dev: one command, no foot-guns
 
@@ -80,7 +84,7 @@ docker compose --profile local up -d --build
 ```
 
 - Vue runs with Vite hot refresh.
-- Go auto-rebuilds on file change (tiny `air` or `reflex` config).
+- Go auto-rebuilds on file change (tiny `air` config).
 - DB is a named volume; blowing it away is a one-liner when I change schemas.
 
 
@@ -187,18 +191,26 @@ The API does three things well:
 A thin handler keeps the shape obvious:
 
 ```go
-func (s *Server) GetPost(w http.ResponseWriter, r *http.Request) {
-    slug := chi.URLParam(r, "slug")
-    post, err := s.repo.FindBySlug(r.Context(), slug)
-    if err != nil {
-        http.Error(w, "not found", http.StatusNotFound)
-        return
-    }
+func (h *PostsHandler) Show(w baseHttp.ResponseWriter, r *baseHttp.Request) *http.ApiError {
+	slug := payload.GetSlugFrom(r)
 
-    // Render DTO with OpenGraph + JSON-LD hints.
-    dto := PresentPost(post)
-    w.Header().Set("Content-Type", "application/json; charset=utf-8")
-    json.NewEncoder(w).Encode(dto)
+	if slug == "" {
+		return http.BadRequestError("Slugs are required to show posts content")
+	}
+
+	post := h.Posts.FindBy(slug)
+	if post == nil {
+		return http.NotFound(fmt.Sprintf("The given post '%s' was not found", slug))
+	}
+
+	items := payload.GetPostsResponse(*post)
+	if err := json.NewEncoder(w).Encode(items); err != nil {
+		slog.Error(err.Error())
+
+		return http.InternalError("There was an issue processing the response. Please, try later.")
+	}
+
+	return nil
 }
 ```
 
@@ -209,7 +221,7 @@ func (s *Server) GetPost(w http.ResponseWriter, r *http.Request) {
 
 ## Vue front-end: lightweight and delightful
 
-Vue 3 + Vite is a pleasant default:
+Vue + Vite is a pleasant default:
 
 - Fast dev server, tiny build output.
 - Component model that maps well to post layouts and lists.
@@ -217,10 +229,9 @@ Vue 3 + Vite is a pleasant default:
 
 I render lists quickly, then **hydrate** details (related posts, reading time, share buttons) after first paint. It keeps the page interactive without drowning in JS.
 
-
 ### About SEO and rendering
 
-For this project, I avoided a heavy SSR layer. Instead, I generate **static SEO pages** (lightweight HTML for crawlers and social previews) with a Go CLI task and let the SPA own the interactive experience. It’s a nice middle path: great previews without runtime SSR complexity.
+For this project, I avoided a heavy SSR layer. Instead, I generate **static SEO pages** (lightweight HTML for crawlers and social previews) with a [Go CLI task](https://oullin.io/post/2025-09-25-shipping-seo-for-a-single-page-app-the-pragmatic-way) and let the SPA own the interactive experience. It’s a nice middle path: great previews without runtime SSR complexity.
 
 
 ## A few war stories (and what they taught me)
@@ -231,12 +242,14 @@ For this project, I avoided a heavy SSR layer. Instead, I generate **static SEO 
 
 - **Make fewer layers.** I started with a fancy deployment script that wrapped `make` that wrapped `compose` that wrapped… everything. When errors hit, the stack traces weren’t helpful. I now deploy with **direct `docker compose` commands** and a small Makefile for local chores.
 
+
 ## Observability: trust but verify
 
 - **Healthchecks** on API and DB (Compose) to detect boot loops early.
-- **`docker logs -f`** tails everything during deploy; it’s incredible how far raw logs get you if your services start fast.
+- **`docker logs -f`** tails everything during deploy; it’s amazing how far raw logs get you if your services start fast.
 - **Curl checks with a custom User-Agent** (e.g. `Twitterbot/1.0`) to validate social meta and canonical tags.
 - **Database logs** in slow-query mode for the first week after migrating content.
+
 
 ## Performance: simple wins
 
@@ -244,6 +257,7 @@ For this project, I avoided a heavy SSR layer. Instead, I generate **static SEO 
 - Inline only **critical CSS** for above-the-fold; lazy-load the rest.
 - Ship **SVGs** for icons, **AVIF/WebP** for images with PNG fallbacks.
 - Keep payloads small: compress JSON, paginate lists, and prefer **select N + join** over N+1 queries.
+
 
 ## Publishing flow (the part I enjoy most)
 
@@ -261,17 +275,19 @@ For this project, I avoided a heavy SSR layer. Instead, I generate **static SEO 
 
 Everything either **ships** or **fails loudly**. That’s the point.
 
+
 ## What I’d do differently next time
 
 - Consider **hybrid SSG** for sections like the blog index if the content shape grows (e.g. monthly archives), while keeping the SPA for reading experience.
 - Add a tiny **admin UI** for drafts and image uploads (right now it’s CLI-driven).
 - Bake in **structured audit logs** on publish to make rollbacks even easier.
 
+
 ## Minimal, reusable snippets
 
 **Caddy header hardening**
 
-```caddy
+```bash
 header {
   Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
   Referrer-Policy "strict-origin-when-cross-origin"
@@ -302,6 +318,7 @@ healthcheck:
   start_period: 5s
 ```
 
+
 ## Plain-English glossary
 
 - **API** — A program that other programs talk to.
@@ -315,6 +332,7 @@ healthcheck:
 - **TLS** — Encryption for web traffic (what makes the lock icon appear).
 - **VPS** — A rented server with your own OS, CPU, and disk.
 
+
 ## Closing
 
 Building [oullin.io](https://oullin.io) from scratch was not about reinventing the wheel. It was about owning the wheel: understanding every turn from browser to database, and making a stack I can grow with. The payoff is a site that loads fast, behaves predictably, and keeps me excited to ship the next post.
@@ -322,5 +340,7 @@ Building [oullin.io](https://oullin.io) from scratch was not about reinventing t
 If you’re considering doing the same: pick boring tools, write small services, keep configs readable, and deploy with the fewest steps you can live with. The rest is just writing.
 
 **Open source repos:**  
-- API: https://github.com/oullin/api  
-- Web: https://github.com/oullin/web
+- API: [https://github.com/oullin/api](https://github.com/oullin/api)  
+- Web: [https://github.com/oullin/web](https://github.com/oullin/web)
+- Infra: [https://github.com/oullin/web](https://github.com/oullin/infra)
+- Articles: [https://github.com/oullin/content](https://github.com/oullin/content)
