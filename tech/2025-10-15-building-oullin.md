@@ -8,7 +8,7 @@ categories: "tech"
 tags: ["development", "software", "automation"]
 ---
 
-<img width="4032" height="2268" alt="IMG_6989" src="https://github.com/user-attachments/assets/0279eaf9-4a1b-4e6b-a66a-00458c953679" />
+![gus-oullin](https://github.com/user-attachments/assets/0279eaf9-4a1b-4e6b-a66a-00458c953679)
 
 
 # Building Oullin: How I Built My Personal Site and Blog Engine.
