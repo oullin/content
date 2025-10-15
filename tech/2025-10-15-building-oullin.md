@@ -1,3 +1,13 @@
+---
+title: "Building Oullin: How I Built My Personal Site and Blog Engine"
+excerpt: "Building oullin from scratch was not about reinventing the wheel. It was about owning the wheel: understanding every turn from browser to database, and making a stack I can grow with."
+slug: "2025-10-15-building-oullin"
+published_at: 2025-10-15
+author: "gocanto"
+categories: "tech"
+tags: ["development", "software", "automation"]
+---
+
 # Building Oullin: How I Built My Personal Site and Blog Engine.
 
 > Today I’m launching my personal website and journal — [oullin.io](https://oullin.io). I built it from the ground up to be fast, simple, and entirely under my control. I also built it to scratch a deeper itch: I love programming, and I try to learn something new every day. Building this stack in public keeps me curious and keeps me honest about what works in the real world.
