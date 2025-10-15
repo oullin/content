@@ -1,8 +1,8 @@
-# Building Oullin: How I Built My Personal Site and Blog Engine with Go, Docker, Caddy, Vue, and a Modest VPS
+# Building Oullin: How I Built My Personal Site and Blog Engine.
 
-> Today I’m launching my personal website and blog — [oullin.io](https://oullin.io). I built it from the ground up to be fast, simple, and entirely under my control. I also built it to scratch a deeper itch: I love programming, and I try to learn something new every day. Building this stack in public keeps me curious and keeps me honest about what works in the real world.
+> Today I’m launching my personal website and journal — [oullin.io](https://oullin.io). I built it from the ground up to be fast, simple, and entirely under my control. I also built it to scratch a deeper itch: I love programming, and I try to learn something new every day. Building this stack in public keeps me curious and keeps me honest about what works in the real world.
 >
-> The entire codebase is public and open source. If you want to explore or reuse parts of it, please take a look at the link I've included to the [oullin organisation](https://github.com/oullin) in GitHub. The READMEs cover local setup with Docker Compose and production notes with Caddy. I want you to know that issues and pull requests are welcome if you spot bugs, have ideas, or want to contribute.
+> The entire codebase is public and open source. If you want to explore or reuse parts of it, please take a look at the link I've included to the [oullin organisation](https://github.com/oullin) in GitHub. The READMEs cover local setup with Docker Compose and production notes with Caddy. Issues and pull requests are welcome if you spot bugs, have ideas, or want to contribute.
 
 I wanted a personal site that felt **fast**, **simple**, and **mine**. No heavy CMS. No mystery plugins. Just a small stack I could understand from start to finish and iterate on forever.
 
