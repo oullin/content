@@ -10,6 +10,7 @@ tags: ["growth", "mindset", "experience", "self-discovery", "improvement", "curi
 
 ![photo-new](https://github.com/user-attachments/assets/4eceb47d-9595-4dab-bdf6-58d4d4180b31)
 
+> Source video: [https://youtu.be/LE4J93zk40A](https://youtu.be/LE4J93zk40A)
 
 As an engineer and a leader, my world is built on a foundation of continuous improvement. We refactor code, optimise queries, and streamline processes. We create roadmaps, plan sprints, 
 and constantly iterate towards a better version of a product, a team, and ourselves. It’s a relentless, forward-moving pursuit of _more_. It’s about getting ready for the next release, 
