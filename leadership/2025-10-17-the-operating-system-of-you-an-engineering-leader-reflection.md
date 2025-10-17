@@ -15,7 +15,7 @@ tags: ["growth", "mindset", "experience", "self-discovery", "improvement", "curi
 As an engineer and a leader, my world is built on a foundation of continuous improvement. We refactor code, optimise queries, and streamline processes. We create roadmaps, plan sprints, and constantly iterate towards a better version of a product, a team, and ourselves. It’s a relentless, forward-moving pursuit of _more_. It’s about getting ready for the next release, the next challenge, the next version of you.
 
 Then, I came across a video of Alan Watts that completely pulled the rug out from under this entire operating system. He calls his lessons "dangerous", and I now understand why. 
-They don’t just challenge your assumptions; they decompile the very code you thought was "you," forcing a look at the fundamental, and perhaps unsettling, truth of your own source code.
+They don’t just challenge your assumptions; they decompile the very code you thought was "you," forcing a look at the fundamental, and perhaps unsettling truth of your own source code.
 
 
 ## The Ego as a Social Construct: Our Professional API
@@ -33,7 +33,7 @@ Engineers live and die by timelines. Roadmaps, quarterly goals, and two-week spr
 
 What arrives is always, and only, _now_.
 
-We sacrifice the present—the only moment that truly exists—for an imaginary future. We get so caught up in "getting ready to live" that we forget actually to live. At the same time, we are shackled by the past. We carry our technical debt, our previous project failures, and our old habits around "like chains wrapped around you". We define our present capabilities by a past that is gone and exists only as a memory.
+We sacrifice the present—the only moment that truly exists—for an imaginary future. We get so caught up in "getting ready to live" that we forget actually to live. At the same time, we are shackled by the past. We carry around our technical debt, our previous project failures, and our old habits like chains wrapped all over. We define our present capabilities by a past that is gone and exists only as a memory.
 
 As a leader, I find this a profound insight. Are we creating a culture that is so focused on the next deadline and haunted by the last retrospective that we miss the magic of the present? 
 
@@ -46,10 +46,9 @@ The tech industry is the undisputed champion of self-improvement. Learn the new 
 
 He argues that it is the ego trying to improve the ego, the "I" trying to make "me" better. In programming terms, this is an infinite loop, a recursive function with no base case. The very act of trying to "fix" yourself reinforces the illusion that you are fundamentally broken or incomplete.
 
-What if we are already whole? What if the problem isn’t that we need to _become_ something, but that we _think_ we need to?. This completely reframes my approach to team development. 
+What if we are already whole? What if the problem isn’t that we need to _become_ something, but that we _think_ we need to? This completely reframes my approach to team development. 
 
-Instead of pushing my team to constantly "improve", what if my role is to help strip away the external pressures and anxieties so they can access the complete, capable person who is already 
-there? The goal shifts from fixing what's broken to revealing what's already whole.
+Instead of pushing my team to constantly "improve", what if my role is to help strip away the external pressures and anxieties so they can access the complete, capable person who is already there? The goal shifts from fixing what's broken to revealing what's already whole.
 
 
 ## Seeing Life as a Process, Not a Project
