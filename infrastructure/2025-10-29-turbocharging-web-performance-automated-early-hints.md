@@ -1,7 +1,7 @@
 # Turbocharging Web Performance: Automated HTTP 103 Early Hints in Our Latest Update
 
-I am excited to announce a significant enhancement to our web infrastructure, implemented through a recent Pull Request (PR #155: "feat: Add build-time Caddy early hints generation"). 
-This update introduces automated generation of **HTTP 103 Early Hints**, a powerful web standard that dramatically improves the perceived loading speed and overall user experience of our website.
+I am excited to announce a significant enhancement to my site infrastructure, implemented through a recent Pull Request ([PR #155: "feat: Add build-time Caddy early hints generation"](https://github.com/oullin/web/pull/155)). 
+This update introduces automated generation of **HTTP 103 Early Hints**, a powerful web standard that dramatically improves the perceived loading speed and overall user experience of my website.
 
 While the technical details might seem complex, the core idea is simple: **we're teaching our web server to give your browser a "head start" on loading critical parts of our site.**
 
