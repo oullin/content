@@ -8,6 +8,9 @@ categories: "infrastructure"
 tags: ["infrastructure", "Docker", "Caddy", "node", "http"]
 ---
 
+![http-server](https://github.com/user-attachments/assets/e36f8c78-81a5-4182-855f-4c27d4963c03)
+
+
 # Turbocharging Web Performance: Automated HTTP 103 Early Hints in Our Latest Update
 
 I am excited to announce a significant enhancement to my site infrastructure, implemented through a recent Pull Request ([PR #155: "feat: Add build-time Caddy early hints generation"](https://github.com/oullin/web/pull/155)). 
