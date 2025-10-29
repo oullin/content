@@ -1,3 +1,13 @@
+---
+title: "Turbocharging Web Performance: Automated HTTP 103 Early Hints"
+excerpt: "As soon as you request a page, our server now sends a quick '103 Early Hints' message, telling your browser to immediately start downloading key files like CSS and JavaScript before the main HTML is even ready. By the time the full page arrives, your browser already has these critical assets, making the site appear to load much faster and feel more responsive."
+slug: "2025-10-29-turbocharging-web-performance-automated-early-hints"
+published_at: 2025-10-29
+author: "gocanto"
+categories: "infrastructure"
+tags: ["infrastructure", "Docker", "Caddy", "node", "http"]
+---
+
 # Turbocharging Web Performance: Automated HTTP 103 Early Hints in Our Latest Update
 
 I am excited to announce a significant enhancement to my site infrastructure, implemented through a recent Pull Request ([PR #155: "feat: Add build-time Caddy early hints generation"](https://github.com/oullin/web/pull/155)). 
