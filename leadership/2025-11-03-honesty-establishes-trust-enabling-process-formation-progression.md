@@ -1,3 +1,15 @@
+---
+title: "Honesty establishes trust, enabling process formation and progression"
+excerpt: "Honesty is the bedrock of any high-performing engineering team. When people know they can rely on each other to tell the truth—whether it’s about meeting deadlines, reporting bugs, or setting realistic expectations—they build an atmosphere of transparency that fosters trust."
+slug: "2025-11-03-honesty-establishes-trust-enabling-process-formation-progression"
+published_at: 2025-11-03
+author: "gocanto"
+categories: "leadership"
+tags: ["growth", "mindset", "experience", "expectations", "challenges", "communication", "process"]
+---
+
+![trust-word-scrabble-tiles_23-2148227724](https://github.com/user-attachments/assets/508d4ae7-7fdc-4f0a-bc99-aec246807578)
+
 Honesty is the bedrock of any high-performing engineering team. When people know they can rely on each other to tell the truth—whether it’s about meeting deadlines, reporting bugs, or setting realistic expectations—they build an atmosphere of transparency that fosters trust. Trust, in turn, frees individuals to contribute their best ideas, solve problems efficiently, and collaborate without fear. Over time, these qualities transform a collection of technical experts into a brotherhood—an engineering team that lifts one another and delivers meaningful results.
 
 Below are key ways honesty and trust work together to create that foundation, along with why leaders must learn to let go and allow the team to thrive.
