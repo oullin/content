@@ -1,3 +1,13 @@
+---
+title: "Your AI Model is Not Your Product"
+excerpt: "Effective AI application requires more than just a model; it involves a full 'AI stack' with several key layers. The choices made at each layer impact the solution's quality, speed, cost, and safety"
+slug: "2025-11-04-your-ai-model-is-not-your-product"
+published_at: 2025-11-04
+author: "gocanto"
+categories: "engineering"
+tags: ["engineering", "llm", "model", "product", "ai"]
+---
+
 ![ai-art-gamer-computer-pc-gaming-hd-wallpaper-preview](https://github.com/user-attachments/assets/10d5c396-d8a2-4a7c-b3b2-f5d67cb6c90a)
 
 
