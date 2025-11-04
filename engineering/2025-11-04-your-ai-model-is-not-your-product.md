@@ -1,3 +1,6 @@
+![ai-art-gamer-computer-pc-gaming-hd-wallpaper-preview](https://github.com/user-attachments/assets/10d5c396-d8a2-4a7c-b3b2-f5d67cb6c90a)
+
+
 # Your AI Model is Not Your Product
 
 I just watched a great video from IBM Technology called ["What Is an AI Stack?"](https://youtu.be/RRKwmeyIc24?si=phatoGIdGT9gTTZA) It does a fantastic job of breaking down the five key layers of building an AI system.
@@ -5,7 +8,6 @@ I just watched a great video from IBM Technology called ["What Is an AI Stack?"]
 As an engineer, I can't stress this enough: **building AI is not just about picking a cool model.** That's the easy part. The real work—part that turns a fun demo into a reliable, scalable product—is in the _rest_ of the stack.
 
 The video gives a perfect map. Here’s my practical feedback on each of those five layers and where your engineering team will spend its time.
-
 
 
 ## The Infrastructure Layer (The Foundation)
