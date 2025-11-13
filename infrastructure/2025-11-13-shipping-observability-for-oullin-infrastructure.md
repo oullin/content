@@ -1,6 +1,8 @@
 # Shipping Observability for Oullin API: What We Built and How You Use It
 
-Over the last cycle, I added a focused observability stack to the Oullin API. It gives us a clear picture of the app in production without exposing sensitive endpoints. This post explains what we built, how it’s wired, and the exact steps to run, access, and maintain it.
+We’ve just shipped a straightforward, secure way to understand how the Oullin API behaves in production. This work adds Prometheus for metrics collection, Grafana for dashboards, and a `/metrics` endpoint in the API—wired through Docker with strict network isolation. It’s simple to run on a single VPS, safe by default, and ready with pre-provisioned dashboards so we can spot issues fast and ship with confidence.
+
+Overall, it gives us a clear picture of the app in production without exposing sensitive endpoints. This post explains what we built, how it’s wired, and the exact steps for running, accessing, and maintaining it.
 
 ## What we shipped
 
@@ -82,13 +84,10 @@ You can use the Grafana admin password you configured. Do not publish ports in `
 
 -   **Bring monitoring up** (respecting profiles):  
     `make metrics-up`
-    
 -   **Bring monitoring down (local only)**:  
     `make metrics-down`
-    
 -   **Tail logs when debugging**:  
     `make metrics-logs`
-    
 -   **Export dashboards from Grafana to the repo** (so changes are versioned):  
     `make grafana-export`
     
@@ -98,33 +97,24 @@ These wrap Docker Compose commands to keep the workflow repeatable.
 ## Health, persistence, and safety nets
 
 -   **Health checks**:
-    
     -   Prometheus: `/-/ready`
-        
     -   Grafana: `/api/health`
-        
 -   **Restart policy**: `unless-stopped` for both.
-    
 -   **Volumes**: persistent data for Prometheus and Grafana, so re-creates don’t lose history.
-    
 -   **Resource limits** (recommended in `prod`): cap CPU and memory to protect the VPS.
     
 
 ## Prometheus scrape basics
 
--   Targets are defined under `infra/metrics/prometheus/prometheus.yml`.
-    
--   Jobs point to container DNS (for example, `api:8080/metrics`).
-    
+-   Targets are defined under `infra/metrics/prometheus/prometheus.yml`.    
+-   Jobs point to container DNS (for example, `api:8080/metrics`).    
 -   You can add more exporters by declaring a new job and joining the same network.
     
 
 ## Dashboards and datasources as code
 
--   Grafana **provisioning** files live under `infra/metrics/grafana/provisioning/`.
-    
--   Datasources are set to the Prometheus service URL on the Docker network.
-    
+-   Grafana **provisioning** files live under `infra/metrics/grafana/provisioning/`.   
+-   Datasources are set to the Prometheus service URL on the Docker network.   
 -   Dashboards are JSON files in the repo. You can edit in Grafana, then run `make grafana-export` to save them back to git. No manual rework after rebuilds.
     
 
@@ -175,38 +165,27 @@ sudo systemctl start oullin-metrics
 
 ## What this gives us
 
--   **Throughput and latency** per handler, plus error rates.
-    
--   **Runtime signals** (goroutines, GC, memory, CPU).
-    
--   **Database health** via exporter metrics.
-    
--   **Reverse proxy visibility** for upstream timings.
-    
+-   **Throughput and latency** per handler, plus error rates.    
+-   **Runtime signals** (goroutines, GC, memory, CPU).    
+-   **Database health** via exporter metrics.   
+-   **Reverse proxy visibility** for upstream timings.   
 -   **Ready-to-use dashboards** you can extend without losing changes.
     
 
 ## Guardrails we follow
 
--   Never expose `/metrics` or the UIs publicly.
-    
+-   Never expose `/metrics` or the UIs publicly.   
 -   Keep monitoring and the app in separate Compose **projects**.
-    
--   Back up the Grafana and Prometheus volumes.
-    
--   Version dashboards and datasources in git.
-    
+-   Back up the Grafana and Prometheus volumes. 
+-   Version dashboards and datasources in git.    
 -   No `docker compose down` during deploys; use `up -d` and update in place.
     
 
 ## What’s next
 
--   Add SLO panels for latency and error rate.
-    
--   Expand Postgres coverage (slow queries, index bloat).
-    
--   Consider a lightweight logs view if needed, only if it stays small on the VPS.
-    
+-   Add SLO panels for latency and error rate.    
+-   Expand Postgres coverage (slow queries, index bloat).    
+-   Consider a lightweight logs view if needed, only if it stays small on the VPS.   
 -   Nightly backup of monitoring volumes.
     
 
