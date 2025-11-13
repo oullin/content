@@ -8,6 +8,9 @@ categories: "infrastructure"
 tags: ["infrastructure", "Docker", "Caddy", "grafana", "prometheus", "observability"]
 ---
 
+![advanced-observability-solutions-cloud-based-infrastructure-generative-ai-372674435](https://github.com/user-attachments/assets/3e46c106-5da2-4adb-94fa-fabd7a104f07)
+
+
 # Shipping Observability for Oullin API: What We Built and How You Use It
 
 We’ve just shipped a straightforward, secure way to understand how the Oullin API behaves in production. This work adds Prometheus for metrics collection, Grafana for dashboards, and a `/metrics` endpoint in the API—wired through Docker with strict network isolation. It’s simple to run on a single VPS, safe by default, and ready with pre-provisioned dashboards so we can spot issues fast and ship with confidence.
