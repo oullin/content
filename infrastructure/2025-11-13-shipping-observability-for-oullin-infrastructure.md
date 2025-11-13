@@ -17,6 +17,8 @@ We’ve just shipped a straightforward, secure way to understand how the Oullin 
 
 Overall, it gives us a clear picture of the app in production without exposing sensitive endpoints. This post explains what we built, how it’s wired, and the exact steps for running, accessing, and maintaining it.
 
+> See the pull request with the changes: [https://github.com/oullin/api/pull/158](https://github.com/oullin/api/pull/158)
+
 ## What we shipped
 
 -   **Prometheus** to scrape metrics from the API, Postgres, and the reverse proxy.
