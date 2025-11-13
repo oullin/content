@@ -194,6 +194,17 @@ sudo systemctl start oullin-metrics
 -   No `docker compose down` during deploys; use `up -d` and update in place.
     
 
+## Dashboards
+
+> ➡️ Prometheus
+
+![p](https://github.com/user-attachments/assets/15499448-6817-4e6b-ae81-56fe510fa5ab)
+
+> ➡️ Grafana
+
+![p2](https://github.com/user-attachments/assets/48d5f11e-3440-4c95-9171-e665e183e1a1)
+
+
 ## What’s next
 
 -   Add SLO panels for latency and error rate.    
