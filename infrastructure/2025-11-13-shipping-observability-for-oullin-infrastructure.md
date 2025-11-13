@@ -1,3 +1,13 @@
+---
+title: "Shipping Observability for Oullin API: What We Built and How You Use It"
+excerpt: "We added a lean observability stack to the Oullin API: Prometheus, Grafana, and an internal-only /metrics endpoint."
+slug: "2025-11-13-shipping-observability-for-oullin-infrastructure"
+published_at: 2025-11-13
+author: "gocanto"
+categories: "infrastructure"
+tags: ["infrastructure", "Docker", "Caddy", "grafana", "prometheus", "observability"]
+---
+
 # Shipping Observability for Oullin API: What We Built and How You Use It
 
 We’ve just shipped a straightforward, secure way to understand how the Oullin API behaves in production. This work adds Prometheus for metrics collection, Grafana for dashboards, and a `/metrics` endpoint in the API—wired through Docker with strict network isolation. It’s simple to run on a single VPS, safe by default, and ready with pre-provisioned dashboards so we can spot issues fast and ship with confidence.
