@@ -48,8 +48,8 @@ docker compose -f infra/metrics/docker-compose.yml --profile local up -d
 # create shared network once
 docker network create oullin_net || true
 
-# monitoring lives in its own project
-docker compose -p oullin_infra -f infra/metrics/docker-compose.yml --profile prod up -d
+# monitoring lives in its own services
+docker compose -p oullin_infra -f docker-compose.yml --profile prod up -d
 
 # app lives in a different project
 docker compose -p oullin_app -f docker-compose.yml --profile prod up -d
@@ -132,7 +132,7 @@ These wrap Docker Compose commands to keep the workflow repeatable.
 
 ```bash
 # 0) Ensure monitoring is up separately
-docker compose -p oullin_infra -f infra/metrics/docker-compose.yml --profile prod up -d
+docker compose -p oullin_infra -f docker-compose.yml --profile prod up -d
 
 # 1) Deploy/update the app without stopping the world
 docker compose -p oullin_app -f docker-compose.yml pull
@@ -157,8 +157,8 @@ Requires=docker.service
 [Service]
 Type=oneshot
 WorkingDirectory=/srv/oullin
-ExecStart=/usr/bin/docker compose -p oullin_infra -f infra/metrics/docker-compose.yml --profile prod up -d
-ExecStop=/usr/bin/docker compose -p oullin_infra -f infra/metrics/docker-compose.yml --profile prod stop
+ExecStart=/usr/bin/docker compose -p oullin_infra -f docker-compose.yml --profile prod up -d
+ExecStop=/usr/bin/docker compose -p oullin_infra -f docker-compose.yml --profile prod stop
 RemainAfterExit=yes
 
 [Install]
