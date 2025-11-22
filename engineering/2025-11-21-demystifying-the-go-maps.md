@@ -1,3 +1,6 @@
+
+![go](https://github.com/user-attachments/assets/e29724b9-c2e2-4378-9d95-e2449e535984)
+
 # Demystifying the Go Map: A Look Under the Hood
 
 If you have written more than ten lines of Go, you have used a map. It is one of the most fundamental data structures in the language. You type `m["key"] = value`, and it just works. It feels like magic—fast, efficient, and reliable.
