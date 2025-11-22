@@ -8,8 +8,9 @@ categories: "go"
 tags: ["engineering", "go", "maps"]
 ---
 
-
 ![go](https://github.com/user-attachments/assets/e29724b9-c2e2-4378-9d95-e2449e535984)
+
+> Interactive tutorial: [https://github.com/gocanto/go-maps](https://github.com/gocanto/go-maps)
 
 # Demystifying the Go Map: A Look Under the Hood
 
