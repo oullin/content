@@ -52,10 +52,10 @@ By stacking all the tiny keys together and all the large values together, Go eli
 
 When you assign or retrieve a value, Go hashes your key. It then splits that hash into two parts to do two different jobs:
 
-    - **Low-Order Bits (LOB): The GPS** Go uses the lower bits of the hash to decide **which bucket** your key belongs to. If you have 8 buckets, the last 3 bits are used to find the index (0-7).
-    - **High-Order Bits (HOB): The Security Guard** Go takes the top 8 bits of the hash and calls it the **Tophash**. It stores this single byte in the `[ 8 Tophashes ]` array at the very start of the bucket.
+- **Low-Order Bits (LOB): The GPS** Go uses the lower bits of the hash to decide **which bucket** your key belongs to. If you have 8 buckets, the last 3 bits determine the index (0-7).
+- **High-Order Bits (HOB): The Security Guard** Go takes the top 8 bits of the hash and calls it the **Tophash**. It stores this single byte in the `[ 8 Tophashes ]` array at the very start of the bucket.
 
-When searching for a key, the runtime first compares these Tophashes. Comparing a single byte is incredibly fast. If the Tophash doesn't match, Go doesn't bother checking the full key (which might be a long string). It only checks the actual key in memory if the Tophash is a match.
+When searching for a key, the runtime first compares these Tophashes. Comparing a single byte is incredibly fast. If the Tophash doesn't match, Go doesn't bother checking the whole key (which might be a long string). It only checks the actual key in memory if the Tophash matches.
 
 ## Handling Traffic Jams (Overflow)
 
@@ -71,11 +71,11 @@ Maps must grow as you add data. If the map gets too full (specifically, when the
 
 It doubles the number of buckets. But copying all that data at once would freeze your program, causing a latency spike.
 
-Instead, Go uses **Incremental Evacuation**.
+> Instead, Go uses **Incremental Evacuation**.
 
-1.  It allocates the new, larger memory.
-2.  It keeps a pointer to the old memory.
-3.  Every time you insert or delete a key, Go moves a small amount of data from the old buckets to the new ones.
+1. It allocates the new, larger memory.
+2. t keeps a pointer to the old memory.
+3. Every time you insert or delete a key, Go moves a small amount of data from the old buckets to the new ones.
     
 
 This spreads the cost of resizing over time, ensuring your application stays responsive.
@@ -84,13 +84,13 @@ This spreads the cost of resizing over time, ensuring your application stays res
 
 The Go map is a masterclass in engineering trade-offs. It sacrifices a little bit of theoretical simplicity for real-world performance:
 
-1.  **Buckets of 8** maximize CPU cache usage.
-2.  **Key/Value separation** minimises wasted RAM (padding).
-3.  **Tophashes** allow for "fast-fail" lookups. 
-4.  **Incremental resizing** prevents latency spikes.
+1. **Buckets of 8** maximize CPU cache usage.
+2. **Key/Value separation** minimises wasted RAM (padding).
+3. **Tophashes** allow for "fast-fail" lookups. 
+4. **Incremental resizing** prevents latency spikes.
     
 
-Next time you type `m[k] = v`, remember: there is a sophisticated engine running underneath ensuring your code runs fast.
+> 💡 Next time you type `m[k] = v`, remember: there is a sophisticated engine running beneath the surface to ensure your code runs fast.
 
 
 
