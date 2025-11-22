@@ -2,7 +2,7 @@
 title: "Demystifying the gomaps"
 excerpt: "The Go map isn’t just a standard hash table. It is a highly optimised machine designed to play nicely with modern CPU caches and memory alignment. Let’s pop the hood and look at the engineering choices that make Go maps special."
 slug: "2025-11-21-demystifying-the-go-maps"
-published_at: 2025-1-21
+published_at: 2025-11-21
 author: "gocanto"
 categories: "go"
 tags: ["engineering", "go", "maps"]
