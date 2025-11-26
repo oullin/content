@@ -8,6 +8,10 @@ Recently, however, I ran into a tricky little bug. It wasn't a security hole—t
 
 I want to share what happened in plain English because it offers a fascinating look at how precise digital security needs to be.
 
+> 🔧 API Changes: [https://github.com/oullin/api/pull/171](https://github.com/oullin/api/pull/171)
+> 
+> 📡 Web Changes: [https://github.com/oullin/web/pull/178](https://github.com/oullin/web/pull/178)
+
 
 ## The "Digital Check" Analogy
 
@@ -98,7 +102,7 @@ sequenceDiagram
 
 ## Why This Matters
 
-Bugs like this can be frustrating because they temporarily break things, but they are also reassuring. They prove that the security measures are working. The Oullin system is designed to reject anything that looks even slightly suspicious—even if it’s just the app being a little disorganized with its timing.
+Bugs like this can be frustrating because they temporarily break things, but they are also reassuring. They prove that the security measures are working. The Oullin system is designed to reject anything that looks even slightly suspicious—even if it’s just the app being a little disorganised with its timing.
 
 I’ve deployed the fix, the clocks are synchronised, and everything is running smoothly again.
 
