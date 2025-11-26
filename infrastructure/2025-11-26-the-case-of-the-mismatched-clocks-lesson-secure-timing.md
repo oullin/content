@@ -11,8 +11,6 @@ tags: ["infrastructure", "security", "digital"]
 ![cartoon-illustration-bank-vault-metallic-iron-safe-door_1441-1915](https://github.com/user-attachments/assets/eccc7db1-70fe-42da-97e6-ff80391dd9c5)
 
 
-# The Case of the Mismatched Clocks: A Lesson in Secure Timing
-
 Building secure software is a lot like building a bank vault. You need thick walls, complex locks, and stringent procedures for who gets in and when.
 
 At [Oullin](https://oullin.io/), I take the security of your data incredibly seriously. I use advanced techniques to ensure that every single message the app sends to the servers is authentic and hasn't been tampered with.
