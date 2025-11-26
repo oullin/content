@@ -1,3 +1,6 @@
+![cartoon-illustration-bank-vault-metallic-iron-safe-door_1441-1915](https://github.com/user-attachments/assets/eccc7db1-70fe-42da-97e6-ff80391dd9c5)
+
+
 # The Case of the Mismatched Clocks: A Lesson in Secure Timing
 
 Building secure software is a lot like building a bank vault. You need thick walls, complex locks, and stringent procedures for who gets in and when.
