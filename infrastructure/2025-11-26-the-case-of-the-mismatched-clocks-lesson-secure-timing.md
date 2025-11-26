@@ -1,3 +1,13 @@
+---
+title: "The Case of the Mismatched Clocks: A Lesson in Secure Timing"
+excerpt: "Building secure software is a lot like building a bank vault. You need thick walls, complex locks, and stringent procedures for who gets in and when."
+slug: "2025-11-26-the-case-of-the-mismatched-clocks-lesson-secure-timing"
+published_at: 2025-11-26
+author: "gocanto"
+categories: "infrastructure"
+tags: ["infrastructure", "security", "digital"]
+---
+
 ![cartoon-illustration-bank-vault-metallic-iron-safe-door_1441-1915](https://github.com/user-attachments/assets/eccc7db1-70fe-42da-97e6-ff80391dd9c5)
 
 
