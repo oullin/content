@@ -8,6 +8,9 @@ categories: "php"
 tags: ["floating-point", "php", "money", "risk", "finance"]
 ---
 
+![cat](https://github.com/user-attachments/assets/29abfc25-62d2-4f85-a711-83cebb847626)
+
+
 If you’ve been building web applications for any length of time, you’ve likely encountered the infamous floating-point math problem.
 
 You try something simple in PHP:
