@@ -1,4 +1,12 @@
-# Handling Money in PHP: Stop Using Floats and Start Using Minor Units
+---
+title: "Handling Money in PHP: Stop Using Floats and Start Using Minor Units"
+excerpt: "Stop risking financial data corruption with floating-point math. Learn the robust, architectural approach to handling money in PHP using minor units and a strict separation of storage and display logic."
+slug: "2025-12-05-handling-money-in-php"
+published_at:2025-12-05
+author: "gocanto"
+categories: "php"
+tags: ["floating-point", "php", "money", "risk", "finance"]
+---
 
 If you’ve been building web applications for any length of time, you’ve likely encountered the infamous floating-point math problem.
 
@@ -16,7 +24,7 @@ Instead, we use integers representing the smallest unit of currency (often calle
 
 But even when using the right library, developers often stumble on the crucial steps of getting data _out_ of the money object for two distinct purposes: **Database Storage** and **User Display**.
 
-Let's look at the best, safest way to parse monetary amounts in `PHP` using a robust, static utility class.
+Let's look at the best, safest way to parse monetary amounts in PHP using a robust, static utility class.
 
 
 ### The Terminology Shift: Forget "Cents"
