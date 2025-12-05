@@ -5,7 +5,7 @@ If you’ve been building web applications for any length of time, you’ve like
 You try something simple in PHP:
 
 ```php
-  echo 0.1 + 0.2; // Result: 0.30000000000000004
+echo 0.1 + 0.2; // Result: 0.30000000000000004
 ```
     
 In most applications, that tiny fraction doesn't matter. In e-commerce, fintech, or payroll—areas where I've spent years integrating payment rails, a tiny fraction gets you fired.
@@ -44,62 +44,62 @@ Instead of binding this logic to specific models via Traits, we can create a ded
 Here is a modern PHP class that handles both scenarios correctly.
 
 ```php
-    <?php
-    
-    declare(strict_types=1);
-    
-    namespace App\Support;
-    
-    use Money\Currencies\ISOCurrencies;
-    use Money\Formatter\DecimalMoneyFormatter;
-    use Money\Money;
-    use OverflowException;
-    
-    class ConvertsMoney
+<?php
+
+declare(strict_types=1);
+
+namespace App\Support;
+
+use Money\Currencies\ISOCurrencies;
+use Money\Formatter\DecimalMoneyFormatter;
+use Money\Money;
+use OverflowException;
+
+class ConvertsMoney
+{
+    /**
+     * Use this for DATABASE STORAGE.
+     * Returns the integer minor unit (e.g., 1050 for $10.50, 1050 for ¥1050).
+     * Safe against integer overflow.
+     */
+    public static function toStorageFormat(Money $money): int
     {
-        /**
-         * Use this for DATABASE STORAGE.
-         * Returns the integer minor unit (e.g., 1050 for $10.50, 1050 for ¥1050).
-         * Safe against integer overflow.
-         */
-        public static function toStorageFormat(Money $money): int
-        {
-            // MoneyPHP stores amounts internally as strings to support massive numbers.
-            $amountStr = $money->getAmount();
-    
-            // We must ensure this string actually fits into a PHP integer before casting.
-            // We use BC Math (bccomp) to compare the string values safely.
-    
-            // 1. Check if it's too big
-            if (bccomp($amountStr, (string) PHP_INT_MAX) === 1) {
-                throw new OverflowException("Money amount '{$amountStr}' exceeds current system's PHP_INT_MAX");
-            }
-    
-            // 2. Check if it's too small (negative amounts for refunds/debts)
-            if (bccomp($amountStr, (string) PHP_INT_MIN) === -1) {
-                throw new OverflowException("Money amount '{$amountStr}' is below current system's PHP_INT_MIN");
-            }
-    
-            // It is now safe to cast to int.
-            return (int) $amountStr;
+        // MoneyPHP stores amounts internally as strings to support massive numbers.
+        $amountStr = $money->getAmount();
+
+        // We must ensure this string actually fits into a PHP integer before casting.
+        // We use BC Math (bccomp) to compare the string values safely.
+
+        // 1. Check if it's too big
+        if (bccomp($amountStr, (string) PHP_INT_MAX) === 1) {
+            throw new OverflowException("Money amount '{$amountStr}' exceeds current system's PHP_INT_MAX");
         }
-    
-        /**
-         * Use this for FRONTEND DISPLAY.
-         * Returns the human-readable string in major units (e.g., "10.50" or "1050").
-         * Automatically handles currencies with different decimal counts.
-         */
-        public static function toDisplayFormat(Money $money): string
-        {
-            // Load standard ISO currencies rules (USD=2 decimals, JPY=0, BHD=3, etc.)
-            $currencies = new ISOCurrencies();
-            
-            // This formatter knows where to put the decimal point based on the currency.
-            $moneyFormatter = new DecimalMoneyFormatter($currencies);
-    
-            return $moneyFormatter->format($money);
+
+        // 2. Check if it's too small (negative amounts for refunds/debts)
+        if (bccomp($amountStr, (string) PHP_INT_MIN) === -1) {
+            throw new OverflowException("Money amount '{$amountStr}' is below current system's PHP_INT_MIN");
         }
+
+        // It is now safe to cast to int.
+        return (int) $amountStr;
     }
+
+    /**
+     * Use this for FRONTEND DISPLAY.
+     * Returns the human-readable string in major units (e.g., "10.50" or "1050").
+     * Automatically handles currencies with different decimal counts.
+     */
+    public static function toDisplayFormat(Money $money): string
+    {
+        // Load standard ISO currencies rules (USD=2 decimals, JPY=0, BHD=3, etc.)
+        $currencies = new ISOCurrencies();
+        
+        // This formatter knows where to put the decimal point based on the currency.
+        $moneyFormatter = new DecimalMoneyFormatter($currencies);
+
+        return $moneyFormatter->format($money);
+    }
+}
 ```
 
 
@@ -124,8 +124,8 @@ The `toDisplayFormat` method completely avoids doing math.
 Do not do this:
 
 ```php
-    // BAD: Assuming everything has two decimals
-    echo $money->getAmount() / 100; 
+// BAD: Assuming everything has two decimals
+echo $money->getAmount() / 100; 
 ```
 
 Instead, we use the `DecimalMoneyFormatter`. It looks up the currency code in the Money object (e.g., 'USD' or 'JPY'), consults the ISO rules for that currency, and determines exactly where the decimal point should go.
@@ -136,53 +136,52 @@ Instead, we use the `DecimalMoneyFormatter`. It looks up the currency code in th
 Here is how you might use this class in a typical workflow, such as processing a transaction.
 
 ```php
-    use Money\Money;
-    use App\Support\ConvertsMoney;
-    
-    class TransactionProcessor
+use Money\Money;
+use App\Support\ConvertsMoney;
+
+class TransactionProcessor
+{
+    public function process(Money $total): void
     {
-        public function process(Money $total): void
-        {
-            // --- 1. Storage ---
-            // We need the raw integer for the database 'amount' column.
-            // We call the static method directly.
-            $dbValue = ConvertsMoney::toStorageFormat($total);
-            $currencyCode = $total->getCurrency()->getCode();
-            
-            // simulated DB save: 
-            // INSERT INTO transactions (amount, currency) VALUES ($dbValue, $currencyCode);
-            echo "Saving integer {$dbValue} ({$currencyCode}) to database...\n";
-    
-    
-            // --- 2. Display ---
-            // We need a pretty string to show the user on the receipt.
-            $uiValue = ConvertsMoney::toDisplayFormat($total);
-            
-            echo "Sending receipt for amount: {$uiValue}\n";
-        }
+        // --- 1. Storage ---
+        // We need the raw integer for the database 'amount' column.
+        // We call the static method directly.
+        $dbValue = ConvertsMoney::toStorageFormat($total);
+        $currencyCode = $total->getCurrency()->getCode();
+        
+        // simulated DB save: 
+        // INSERT INTO transactions (amount, currency) VALUES ($dbValue, $currencyCode);
+        echo "Saving integer {$dbValue} ({$currencyCode}) to database...\n";
+
+
+        // --- 2. Display ---
+        // We need a pretty string to show the user on the receipt.
+        $uiValue = ConvertsMoney::toDisplayFormat($total);
+        
+        echo "Sending receipt for amount: {$uiValue}\n";
     }
-    
-    // --- Examples ---
-    
-    $processor = new TransactionProcessor();
-    
-    echo "--- Processing USD ---\n";
-    // $10.50
-    $usd = Money::USD(1050); 
-    $processor->process($usd);
-    // Output:
-    // Saving integer 1050 (USD) to database...
-    // Sending receipt for amount: 10.50
-    
-    
-    echo "\n--- Processing JPY ---\n";
-    // ¥1050 (Yen has no decimals)
-    $jpy = Money::JPY(1050); 
-    $processor->process($jpy);
-    // Output:
-    // Saving integer 1050 (JPY) to database...
-    // Sending receipt for amount: 1050
-    
+}
+
+// --- Examples ---
+
+$processor = new TransactionProcessor();
+
+echo "--- Processing USD ---\n";
+// $10.50
+$usd = Money::USD(1050); 
+$processor->process($usd);
+// Output:
+// Saving integer 1050 (USD) to database...
+// Sending receipt for amount: 10.50
+
+
+echo "\n--- Processing JPY ---\n";
+// ¥1050 (Yen has no decimals)
+$jpy = Money::JPY(1050); 
+$processor->process($jpy);
+// Output:
+// Saving integer 1050 (JPY) to database...
+// Sending receipt for amount: 1050
 ```
 
 By separating storage concerns from display concerns into a dedicated utility, you ensure your application’s financial data is both accurate in the database and understandable to your users, regardless of the currency they use.
