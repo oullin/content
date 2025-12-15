@@ -203,7 +203,7 @@ A few intentional Go-specific choices stand out:
 -   Aggregation and a simple in-memory exchange system are included.
     
 
-## Practical best practices
+## Best practices
 
 If you only take a few rules into your codebase, take these:
 
@@ -213,9 +213,101 @@ If you only take a few rules into your codebase, take these:
 4.  **Keep currency mismatches as errors, not edge cases**. That is the whole point of using a Money type.
 
 
+## Integration guide in a real Go service
+
+### 1) Boundary rule: parse at the edge, store minor units inside
+
+-   **From HTTP/UI**: prefer `CreateFromString("99.99", "USD")` for exact user input, and use floats only if you must.
+-   **Inside the domain**: keep `*money.Money` (or `amount int64 + currency string`) in your structs and do arithmetic via `money.Manager`.
+    
+
+Example request DTO and mapping:
+```go
+type CreateInvoiceReq struct {
+	Amount   string `json:"amount"`   // "99.99"
+	Currency string `json:"currency"` // "USD"
+}
+
+func (s *Service) CreateInvoice(req CreateInvoiceReq) (*Invoice, error) {
+	mm := money.NewManager()
+
+	price, err := mm.CreateFromString(req.Amount, req.Currency)
+	if err != nil {
+		return nil, err
+	}
+
+	//Perform all operations in mm.Add/Subtract/Split/Allocate, etc.
+	return &Invoice{Total: price}, nil
+}
+```
+
+`parser.Parser` is proper when you accept human-formatted strings like `$1,234.56` or `EUR 10,50`, and it has explicit helpers for decimal-comma inputs.
 
 
+### 2) JSON APIs: stable representation
 
+The README shows JSON like:
+
+```json
+{"amount":2999, "currency":"USD"}
+```
+
+So a clean API approach is:
+
+-   **External**: send `amount` as minor units (int) plus currency code.
+-   **UI**: format with `.Display()` on the server or client as needed.
+
+
+### 3) Database storage options
+
+**Option A (simple): single column using Scanner/Valuer**  
+The package supports storing money as a delimited string, such as `2999|USD`, via `sql.Scanner` and `driver.Valuer`.
+
+```go
+type Product struct {
+	ID    int
+	Price *money.Money
+}
+
+// INSERT will store as: 2999|USD
+_, _ = db.Exec(`INSERT INTO products (price) VALUES (?)`, p.Price)
+```
+**Option B (more queryable): two columns**  
+If you need to query ranges and aggregate in SQL, consider:
+
+-   `price_amount BIGINT NOT NULL` (minor units)
+-   `price_currency CHAR(3) NOT NULL`
+    
+
+Then reconstruct `Money` in Go:
+```go
+m := money.NewManager().Create(priceAmount, priceCurrency)
+```
+Both approaches still follow the best practice of storing minor units.
+
+
+### 4) Currency conversion: keep it explicit
+
+Conversion is done via a `Converter` that depends on a currency manager and an exchange rate source. The README includes an in-memory exchange (`exchange.NewExchange`) where you add rates and then convert.
+
+In production, you can wrap your FX provider behind a small interface that feeds rates into the converter, and you can decide:
+
+-   When to snapshot rates.
+-   How to audit which rate was used for each transaction.
+
+
+5) Common service patterns that avoid bugs
+
+- Use Split() / Allocate() for proration (discounts, revenue share) so rounding is consistent.
+- Treat currency mismatch as a fundamental error, not a special case. Sentinel errors exist (example: exception.ErrCurrencyMismatch). 
+
+In tests, assert on minor units and currency code. Keep display-formatting tests separate, since formatting varies by currency rules.
+
+## Outro
+
+Money bugs are rarely loud. They show up later as one-cent mismatches, invoice totals that do not reconcile, or “impossible” refunds that only fail in production. The point of `gocanto/money` is to make those mistakes harder to write in the first place by keeping currency attached to every amount, using integers for storage and arithmetic, and giving you clear tools for rounding, splitting, allocation, parsing, and conversion.
+
+If you are building anything that charges, refunds, prorates, splits revenue, or reports financial totals, this package is a solid baseline. Start by parsing at the edges, store minor units in the database, and keep Money as a first-class type throughout your domain. That alone removes a whole category of “we will fix it later” accounting surprises.
 
 
 
