@@ -8,6 +8,7 @@ categories: "go"
 tags: ["engineering", "go", "money"]
 ---
 
+![money](https://github.com/user-attachments/assets/9e1b9d66-60c6-406d-9066-3d639812e286)
 
 
 # Money in Go, done properly
