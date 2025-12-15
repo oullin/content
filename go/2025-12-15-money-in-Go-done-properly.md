@@ -1,3 +1,15 @@
+---
+title: "Money in Go, done properly"
+excerpt: "Money bugs rarely crash your app. They quietly show up as one-cent mismatches, failed refunds, or totals that do not reconcile."
+slug: "2025-12-15-money-in-Go-done-properly"
+published_at: 2025-12-15
+author: "gocanto"
+categories: "go"
+tags: ["engineering", "go", "money"]
+---
+
+
+
 # Money in Go, done properly
 
 If you have ever seen `0.1 + 0.2` turn into `0.30000000000000004`, you already know why money and floats do not mix. The `gocanto/money` Go module is a practical implementation of Martin Fowler’s Money pattern: treat money as a 
