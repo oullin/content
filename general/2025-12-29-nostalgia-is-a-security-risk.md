@@ -8,6 +8,9 @@ categories: "general"
 tags: ["society", "fake", "news", "crisis"]
 ---
 
+![social-media-crisis](https://github.com/user-attachments/assets/1c6e1587-6f18-4d1e-a621-51f42d41b574)
+
+
 We all love a straightforward narrative. There is comfort in believing that the problems of today can be solved by returning to the habits of yesterday. But in a rapidly evolving technological landscape, relying on nostalgia isn't just intellectually lazy—it’s actively dangerous.
 
 Recently, I encountered a perfect example of **"prejudice over-analysis"**: dismissing a data-driven argument without reading it because it conflicted with a deeply held, pre-existing moral narrative.
