@@ -12,6 +12,8 @@ tags: ["engineering", "ai", "skills", "software"]
 
 # Building a Local-First Skills Platform for AI Agents
 
+> Project Source: [https://github.com/gocanto/skills](https://github.com/gocanto/skills)
+
 AI agents are useful, but team workflows around them are often messy. Skills are stored in random folders, setup steps are manual, and security checks are inconsistent. This project solves that with one clear idea: keep skill management local, structured, and safe.
 
 The system is built around a Go CLI, Docker-based execution, and Make targets. It supports Claude Code, Codex, and the Gemini CLI, and uses symlinks to share a single skill source across many projects.
