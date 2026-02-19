@@ -8,6 +8,8 @@ categories: "ai"
 tags: ["engineering", "ai", "skills", "software"]
 ---
 
+![skills](https://github.com/user-attachments/assets/7523ee24-785a-4972-8a34-7b724ce1099e)
+
 # Building a Local-First Skills Platform for AI Agents
 
 AI agents are useful, but team workflows around them are often messy. Skills are stored in random folders, setup steps are manual, and security checks are inconsistent. This project solves that with one clear idea: keep skill management local, structured, and safe.
