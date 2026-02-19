@@ -1,3 +1,13 @@
+---
+title: "Building a Local-First Skills Platform for AI Agents"
+excerpt: "AI agents are useful, but team workflows around them are often messy. Skills are stored in random folders, setup steps are manual, and security checks are inconsistent."
+slug: "2026-02-19-local-first-skills-platform-for-ai-agents"
+published_at: 2026-02-19
+author: "gocanto"
+categories: "ai"
+tags: ["engineering", "ai", "skills", "software"]
+---
+
 # Building a Local-First Skills Platform for AI Agents
 
 AI agents are useful, but team workflows around them are often messy. Skills are stored in random folders, setup steps are manual, and security checks are inconsistent. This project solves that with one clear idea: keep skill management local, structured, and safe.
