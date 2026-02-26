@@ -1,6 +1,15 @@
-# Stop Installing Python Just to Convert a File to Markdown
+---
+title: "Stop Installing Python Just to Convert a File to Markdown"
+excerpt: "If you work with LLMs, you know the drill. You have a <.docx>, a <.pdf>, or a spreadsheet, and you need it as Markdown — clean, structured text that models can actually work with."
+slug: "2026-02-260-stop-installing-python-just-to-convert-files-to-markdown"
+published_at: 2026-02-260
+author: "gocanto"
+categories: "infrastructure"
+tags: ["infrastructure", "Docker", "LLMs", "make", "html", "csv"]
+---
 
-If you work with LLMs, you know the drill. You have a `.docx`, a `.pdf`, or a spreadsheet, and you need it as Markdown — clean, structured text that models can actually work with.
+![file](https://github.com/user-attachments/assets/f953c79e-8618-42ee-8d14-c542c9f74dc5)
+
 
 Microsoft's [markitdown](https://github.com/microsoft/markitdown) does this well. It converts office documents, PDFs, images, HTML, CSV, and more into Markdown while preserving headings, tables, and lists. 
 The catch? It's a Python tool. That means you need Python installed, a virtual environment set up, and a handful of dependencies managed. 
