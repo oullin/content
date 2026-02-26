@@ -1,7 +1,7 @@
 ---
 title: "Stop Installing Python Just to Convert a File to Markdown"
 excerpt: "If you work with LLMs, you know the drill. You have a <.docx>, a <.pdf>, or a spreadsheet, and you need it as Markdown — clean, structured text that models can actually work with."
-slug: "2026-02-260-stop-installing-python-just-to-convert-files-to-markdown"
+slug: "2026-02-26-stop-installing-python-just-to-convert-files-to-markdown"
 published_at: 2026-02-26
 author: "gocanto"
 categories: "infrastructure"
