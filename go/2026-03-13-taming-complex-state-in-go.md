@@ -9,7 +9,6 @@ tags: ["engineering", "go", "workflow"]
 ---
 
 
-
 # Taming Complex State in Go: A Deep Dive into `oullin/workflow`
 
 ## Where This Came From
