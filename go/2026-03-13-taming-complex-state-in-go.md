@@ -1,3 +1,15 @@
+---
+title: "Taming Complex State in Go: A Deep Dive into `oullin/workflow`"
+excerpt: "Every non-trivial backend application manages state. An order is `placed`, then `paid`, then `shipped`, then `delivered`. A user account is `pending`, then `active`, then maybe `suspended`."
+slug: "2026-03-13-taming-complex-state-in-go"
+published_at: 2026-03-13
+author: "gocanto"
+categories: "go"
+tags: ["engineering", "go", "workflow"]
+---
+
+
+
 # Taming Complex State in Go: A Deep Dive into `oullin/workflow`
 
 ## Where This Came From
