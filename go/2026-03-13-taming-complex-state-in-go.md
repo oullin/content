@@ -42,7 +42,7 @@ theory — the same mathematical model that underpins workflow systems in the in
 
 The library ships two constructors for two distinct mental models.
 
-**`workflow.NewStateMachine()`** enforces that your domain object lives in exactly one state at a time. This is the classic FSM you already know: `draft → pending → active`. Simple, linear, familiar.
+**`workflow.NewStateMachine()`** enforces that your domain object lives in exactly one state at a time. This is the classic FSM (Finite-State Machine) you already know: `draft → pending → active`. Simple, linear, familiar.
 
 **`workflow.New()`** gives you a full Petri Net engine where an object can occupy *multiple places simultaneously*. Think of a document that must go through legal review *and* finance approval in parallel 
 before it can be published. Both reviews occur concurrently; the transition to `published` fires only when both are complete.
