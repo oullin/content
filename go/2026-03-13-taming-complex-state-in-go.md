@@ -8,6 +8,7 @@ categories: "go"
 tags: ["engineering", "go", "workflow"]
 ---
 
+![workflow](https://github.com/oullin/content/releases/download/assets/workflow.png)
 
 # Taming Complex State in Go: A Deep Dive into `oullin/workflow`
 
