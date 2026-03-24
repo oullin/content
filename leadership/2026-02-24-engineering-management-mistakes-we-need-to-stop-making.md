@@ -8,6 +8,8 @@ categories: "leadership"
 tags: ["growth", "mindset", "experience", "self-discovery", "learning", "leadership", "discovery"]
 ---
 
+![engineering](https://github.com/user-attachments/assets/bb8489d3-d4c5-4f17-9958-b6e146f7d29f)
+
 # Engineering Management Mistakes We Need to Stop Making
 
 There's a lot of advice out there about what makes a great engineering leader. But sometimes the most valuable lessons aren't about what to do — they're about what to stop doing.
