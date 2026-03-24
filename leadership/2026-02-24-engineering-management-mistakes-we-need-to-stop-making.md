@@ -2,7 +2,7 @@
 
 There's a lot of advice out there about what makes a great engineering leader. But sometimes the most valuable lessons aren't about what to do — they're about what to stop doing.
 
-After years of working with engineering teams, I've compiled a list of 12 of the most common and costly mistakes we see over and over again. I've grouped them into four categories: leadership issues, team issues, technical planning issues, and the wrong responses to problems. Let's get into it.
+After years of working with engineering teams, I've compiled a list of 12 common and costly mistakes we see over and over again. I've grouped them into four categories: leadership issues, team issues, technical planning issues, and the wrong responses to problems. Let's get into it.
 
 
 ## Leadership Issues
