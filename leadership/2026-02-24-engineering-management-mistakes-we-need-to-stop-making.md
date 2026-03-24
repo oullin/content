@@ -1,3 +1,13 @@
+---
+title: "Engineering Management Mistakes We Need to Stop Making"
+excerpt: "Good engineering leadership isn't just about having great ideas — it's about avoiding the patterns that quietly undermine everything we're trying to build. Most of these mistakes aren't born out of bad intentions. They come from cost pressure, inexperience, or just following what looks like a reasonable path."
+slug: "2026-02-24-engineering-management-mistakes-we-need-to-stop-making.md"
+published_at: 2026-02-24
+author: "gocanto"
+categories: "leadership"
+tags: ["growth", "mindset", "experience", "self-discovery", "learning", "leadership", "discovery"]
+---
+
 # Engineering Management Mistakes We Need to Stop Making
 
 There's a lot of advice out there about what makes a great engineering leader. But sometimes the most valuable lessons aren't about what to do — they're about what to stop doing.
