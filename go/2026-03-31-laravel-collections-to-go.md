@@ -1,3 +1,15 @@
+---
+title: "Laravel Collections to Go"
+excerpt: "Go slices aren't broken. We're not here to complain about them. The issue is ergonomics at scale — what happens when you write the same patterns constantly across a large codebase?"
+slug: "2026-03-31-laravel-collections-to-go"
+published_at: 2026-03-31
+author: "gocanto"
+categories: "go"
+tags: ["engineering", "go", "maps", "slice", "collection"]
+---
+
+![go-maps](https://github.com/user-attachments/assets/e29724b9-c2e2-4378-9d95-e2449e535984)
+
 # We Ported Laravel Collections to Go — Here's Why and How
 
 Go's standard library gives you slices and maps. They're fast, predictable, and honest. But working with them day-to-day means writing the same boilerplate loops over and over — filter this slice, transform that one, take the first five, check if any match a condition. It's not hard, it's just noise. Code that says *how* it works instead of *what* it does.
