@@ -8,7 +8,7 @@ categories: "engineering"
 tags: ["engineering", "llm", "inertia", "laravel", "typescript"]
 ---
 
-<img width="740" height="617" alt="network-server-endpoint-management-system_999616-677" src="https://github.com/user-attachments/assets/7cc89c6a-491e-4fdd-9666-2980ca9a2683" />
+![inertia-go](https://github.com/user-attachments/assets/7cc89c6a-491e-4fdd-9666-2980ca9a2683)
 
 
 # Go Meets the Monolith Renaissance: Introducing oullin/inertia-go
