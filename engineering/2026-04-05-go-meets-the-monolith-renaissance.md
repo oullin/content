@@ -1,3 +1,13 @@
+---
+title: "Go Meets the Monolith Renaissance"
+excerpt: "The backend-first SPA pattern that Laravel developers love — now fully at home in Go. We built oullin/inertia-go for a real production engagement, open-sourced it because the community deserved it, and ported the official Inertia Kitchen Sink demo to prove it works. One binary. No API layer. No separate frontend deployment. Just Go, Inertia, and a component name."
+slug: "2026-04-05-go-meets-the-monolith-renaissance"
+published_at: 2026-04-05
+author: "gocanto"
+categories: "engineering"
+tags: ["engineering", "llm", "inertia", "laravel", "typescript"]
+---
+
 # Go Meets the Monolith Renaissance: Introducing oullin/inertia-go
 
 *The backend-first SPA pattern that [Laravel](https://laravel.com/) developers love — now fully at home in Go.*
@@ -12,7 +22,7 @@ Then [Inertia.js](https://inertiajs.com/) came along and said: *what if it didn'
 
 ## The Problem Inertia Solves
 
-Inertia.js is not a framework. It's a protocol — a thin contract between your server-side routing and your client-side components. The insight is almost embarrassingly simple: your server already knows what page to show. Why not let it *say so directly*, instead of serialising everything into JSON that the client must then interpret?
+Inertia.js is not a framework. It's a protocol — a thin contract between your server-side routing and your client-side components. The insight is almost embarrassingly simple: your server already knows what page to show. Why not let it *say so directly*, instead of serialising everything into JSON for the client to interpret?
 
 With Inertia, you keep your server-side routing. You keep your controllers. You keep your auth middleware, your sessions, your redirects. But instead of rendering HTML templates, you render **page components** — [Vue](https://vuejs.org/), [React](https://react.dev/), or [Svelte](https://svelte.dev/) — passing props down from the server as if you were calling a function.
 
